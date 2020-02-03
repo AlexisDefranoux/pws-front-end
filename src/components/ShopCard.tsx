@@ -7,7 +7,7 @@ let titles = ['AUGUR', 'B', 'CCC', '25', 'ALEXIIIIS'];
 
 type MyProps = { id: number };
 type MyState = { url: string, title: string, price: string };
-class ShopCart extends Component<MyProps, MyState> {
+class ShopCard extends Component<MyProps, MyState> {
     constructor(props: any) {
         super(props);
         this.state = {
@@ -35,4 +35,4 @@ class ShopCart extends Component<MyProps, MyState> {
     }
 }
 
-export default ShopCart;
+export default ShopCard;

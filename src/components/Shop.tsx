@@ -1,6 +1,6 @@
 import { Col, Row } from 'antd';
 import React, { Component } from 'react';
-import ShopCart from "./ShopCard";
+import ShopCard from "./ShopCard";
 
 import './Shop.css'
 
@@ -22,7 +22,7 @@ class Shop extends Component<MyProps, MyState> {
                         this.state.ids.map(el =>
                             // <Link to="/about">
                                 <Col span={8} style={{marginBottom: '15px'}}>
-                                    <ShopCart id={el}/>
+                                    <ShopCard id={el}/>
                                 </Col>
                             // </Link>
                         )
