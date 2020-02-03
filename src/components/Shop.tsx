@@ -1,37 +1,32 @@
-import { Card, Col, Row } from 'antd';
+import { Col, Row } from 'antd';
 import React, { Component } from 'react';
+import ShopCart from "./ShopCard";
 
 import './Shop.css'
 
 type MyProps = { };
-type MyState = { url: string };
+type MyState = { ids: number[] };
 class Shop extends Component<MyProps, MyState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png'
+            ids: [0,1,2,3,4]
         };
     }
 
     render() {
         return (
-            <div style={{ background: '#ECECEC', padding: '30px' }}>
+            <div className={"Shop"} style={{ background: '#ECECEC', padding: '30px' }}>
                 <Row gutter={16}>
-                    <Col span={8}>
-                        <Card title="Card title" bordered={false}>
-                            Card content
-                        </Card>
-                    </Col>
-                    <Col span={8}>
-                        <Card title="Card title" bordered={false}>
-                            Card content
-                        </Card>
-                    </Col>
-                    <Col span={8}>
-                        <Card title="Card title" bordered={false}>
-                            Card content
-                        </Card>
-                    </Col>
+                    {
+                        this.state.ids.map(el =>
+                            // <Link to="/about">
+                                <Col span={8} style={{marginBottom: '15px'}}>
+                                    <ShopCart id={el}/>
+                                </Col>
+                            // </Link>
+                        )
+                    }
                 </Row>
             </div>
         )
