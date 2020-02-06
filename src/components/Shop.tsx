@@ -19,7 +19,7 @@ class Shop extends Component<MyProps, MyState> {
                     {
                         this.state.ids.map(el =>
                             // <Link to="/about">
-                                <Col span={8} style={{marginBottom: '15px'}}>
+                                <Col key={el} span={8} style={{marginBottom: '15px'}}>
                                     <ShopCard id={el}/>
                                 </Col>
                             // </Link>

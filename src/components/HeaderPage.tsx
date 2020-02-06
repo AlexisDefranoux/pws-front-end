@@ -3,6 +3,7 @@ import {Badge, Icon, Menu} from "antd";
 import Shop from "./Shop";
 import Detail from "./Detail";
 import Login from "./Login";
+import AddPluginForm from "./AddPluginForm";
 import './HeaderPage.css'
 
 import {
@@ -33,7 +34,7 @@ class HeaderPage extends Component<MyProps, MyState> {
                             <Link to="shop"><Icon type="shop"/>Shop</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <Link to="detail"><Icon type="file-add"/>Add a plugin</Link>
+                            <Link to="addplugin"><Icon type="file-add"/>Add a plugin</Link>
                         </Menu.Item>
                         <Menu.Item style={{float:"right"}} key="4">
                             <Link to="login"><Icon type="user"/>Login</Link>
@@ -41,12 +42,16 @@ class HeaderPage extends Component<MyProps, MyState> {
                         <Menu.Item style={{float:"right"}} key="3" disabled>
                             <Badge count={5}><Icon type="shopping-cart"/></Badge>
                         </Menu.Item>
+                        <Menu.Item key="5">
+                            <Link to="detail"><Icon type="file-add"/>Detail</Link>
+                        </Menu.Item>
                     </Menu>
                 </header>
 
                 <div style={{padding: "78px 30px 30px 30px"}}>
                 <Switch>
                     <Route path="/shop"><Shop/></Route>
+                    <Route path="/addplugin"><AddPluginForm/></Route>
                     <Route path="/detail"><Detail/></Route>
                     <Route path="/login"><Login username={""} password={""} remember={""}/></Route>
                     <Route path="/:something"><p>Page 404</p></Route>
