@@ -2,8 +2,6 @@ import { Col, Row } from 'antd';
 import React, { Component } from 'react';
 import ShopCard from "./ShopCard";
 
-import './Shop.css'
-
 type MyProps = { };
 type MyState = { ids: number[] };
 class Shop extends Component<MyProps, MyState> {

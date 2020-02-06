@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
+import {Layout} from "antd";
 
-type MyProps = { };
-type MyState = { };
+import './FooterPage.css'
 
-class FooterPage extends Component<MyProps, MyState> {
+const { Footer } = Layout;
+
+class FooterPage extends Component {
 
     render() {
         return (
-            <footer style={{ textAlign: 'center', padding: '10px'}}>Pop team - © France 2020 - Created by Pop, Jajmy, Dionysos, Lexalis</footer>
+            <Footer className={"footer"} >Pop team - © France 2020 - Created by Pop, Jajmy, Dionysos, Lexalis</Footer>
         );
     }
 }

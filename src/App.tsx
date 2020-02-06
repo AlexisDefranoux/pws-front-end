@@ -7,7 +7,7 @@ import {Layout} from "antd";
 
 const App: React.FC = () => {
   return (
-    <Layout>
+    <Layout className={"test"} >
         <HeaderPage/>
         <FooterPage/>
     </Layout>

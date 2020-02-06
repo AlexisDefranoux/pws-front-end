@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import './Detail.css';
 import ZoomImg from "./ZoomImg";
 import {Button, Col, Row, Tabs} from "antd";
 import ShopCard from "./ShopCard";

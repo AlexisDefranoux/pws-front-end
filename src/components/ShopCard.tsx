@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import {Card, Button} from "antd";
 
-import './ShopCard.css'
-
 let titles = ['AUGUR', 'B', 'CCC', '25', 'ALEXIIIIS'];
 
 type MyProps = { id: number };

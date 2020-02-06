@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
-import {Icon, Menu} from "antd";
+import {Badge, Icon, Menu} from "antd";
 import Shop from "./Shop";
 import Detail from "./Detail";
+import Login from "./Login";
+import './HeaderPage.css'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -24,7 +27,7 @@ class HeaderPage extends Component<MyProps, MyState> {
     render() {
         return (
             <Router>
-                <header>
+                <header className={"fixed-menu"}>
                     <Menu defaultSelectedKeys={['1']} mode="horizontal">
                         <Menu.Item key="1">
                             <Link to="shop"><Icon type="shop"/>Shop</Link>
@@ -32,31 +35,24 @@ class HeaderPage extends Component<MyProps, MyState> {
                         <Menu.Item key="2">
                             <Link to="detail"><Icon type="file-add"/>Add a plugin</Link>
                         </Menu.Item>
-                        <Menu.Item key="3" disabled>
-                            <Icon type="user"/>
-                            My account
+                        <Menu.Item style={{float:"right"}} key="4">
+                            <Link to="login"><Icon type="user"/>Login</Link>
                         </Menu.Item>
-                        <Menu.Item key="4" disabled>
-                            <Icon type="shopping-cart"/>
-                            My cart
+                        <Menu.Item style={{float:"right"}} key="3" disabled>
+                            <Badge count={5}><Icon type="shopping-cart"/></Badge>
                         </Menu.Item>
                     </Menu>
                 </header>
 
+                <div style={{padding: "78px 30px 30px 30px"}}>
                 <Switch>
-                    <Route path="/shop">
-                        <Shop/>
-                    </Route>
-                    <Route path="/detail">
-                        <Detail/>
-                    </Route>
-                    <Route path="/:something">
-                        <p>Page 404</p>
-                    </Route>
-                    <Route path="/">
-                        <Shop/>
-                    </Route>
+                    <Route path="/shop"><Shop/></Route>
+                    <Route path="/detail"><Detail/></Route>
+                    <Route path="/login"><Login username={""} password={""} remember={""}/></Route>
+                    <Route path="/:something"><p>Page 404</p></Route>
+                    <Route path="/"><Shop/></Route>
                 </Switch>
+                </div>
             </Router>
 
         );

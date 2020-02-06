@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 
-import './Detail.css';
 import {Card} from "antd";
 
 type MyProps = {};
