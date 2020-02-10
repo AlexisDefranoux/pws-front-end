@@ -13,6 +13,7 @@ import {
     Link,
 } from 'react-router-dom';
 import Register from "./Register";
+import TryPlugin from "./TryPlugin";
 
 type MyProps = {};
 type MyState = { current: string };
@@ -46,13 +47,14 @@ class HeaderPage extends Component<MyProps, MyState> {
                     </Menu>
                 </header>
 
-                <div style={{padding: "78px 30px 30px 30px"}}>
+                <div id="containerDiv" style={{padding: "78px 30px 30px 30px"}}>
                 <Switch>
                     <Route path="/shop"><Shop/></Route>
                     <Route path="/addplugin"><AddPluginForm/></Route>
                     <Route path="/detail/:id"><Detail/></Route>
                     <Route exact path="/login"><Login/></Route>
                     <Route path="/register"><Register/></Route>
+                    <Route path="/tryplugin"><TryPlugin/></Route>
                     <Route path="/:undefined"><p>Page 404</p></Route>
                     <Route path="/"><Shop/></Route>
                 </Switch>
