@@ -69,7 +69,7 @@ class Detail extends Component<MyProps, MyState> {
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Tags"}>
                                     {
-                                        this.state.tags.map((item ,key) => <Tag>{item}</Tag> )
+                                        this.state.tags.map((item, key) => <Tag>{item}</Tag>)
                                     }
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Price"}>{this.state.price + " €"}</Descriptions.Item>

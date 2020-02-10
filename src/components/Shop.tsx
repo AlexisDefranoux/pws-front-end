@@ -20,9 +20,7 @@ class Shop extends Component<MyProps, MyState> {
                 {
                     this.state.ids.map(id =>
                         <Col key={id} span={6} style={{maxWidth: '400px', minWidth: '250px'}}>
-                            <Link to={"/detail/" + id}>
-                                <ShopCard id={id}/>
-                            </Link>
+                            <ShopCard id={id}/>
                         </Col>
                     )
                 }
