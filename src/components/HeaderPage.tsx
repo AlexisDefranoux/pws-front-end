@@ -12,6 +12,7 @@ import {
     Route,
     Link,
 } from 'react-router-dom';
+import Register from "./Register";
 
 type MyProps = {};
 type MyState = { current: string };
@@ -31,19 +32,16 @@ class HeaderPage extends Component<MyProps, MyState> {
                 <header className={"fixed-menu"}>
                     <Menu defaultSelectedKeys={['1']} mode="horizontal">
                         <Menu.Item key="1">
-                            <Link to="shop"><Icon type="shop"/>Shop</Link>
+                            <Link to="/shop"><Icon type="shop"/>Shop</Link>
                         </Menu.Item>
                         <Menu.Item key="2">
-                            <Link to="addplugin"><Icon type="file-add"/>Add a plugin</Link>
+                            <Link to="/addplugin"><Icon type="file-add"/>Add a plugin</Link>
                         </Menu.Item>
                         <Menu.Item style={{float:"right"}} key="4">
-                            <Link to="login"><Icon type="user"/>Login</Link>
+                            <Link to="/login"><Icon type="user"/>Login</Link>
                         </Menu.Item>
                         <Menu.Item style={{float:"right"}} key="3" disabled>
                             <Badge count={5}><Icon type="shopping-cart"/></Badge>
-                        </Menu.Item>
-                        <Menu.Item key="5">
-                            <Link to="detail"><Icon type="file-add"/>Detail</Link>
                         </Menu.Item>
                     </Menu>
                 </header>
@@ -52,9 +50,10 @@ class HeaderPage extends Component<MyProps, MyState> {
                 <Switch>
                     <Route path="/shop"><Shop/></Route>
                     <Route path="/addplugin"><AddPluginForm/></Route>
-                    <Route path="/detail"><Detail/></Route>
-                    <Route path="/login"><Login username={""} password={""} remember={""}/></Route>
-                    <Route path="/:something"><p>Page 404</p></Route>
+                    <Route path="/detail/:id"><Detail/></Route>
+                    <Route exact path="/login"><Login/></Route>
+                    <Route path="/register"><Register/></Route>
+                    <Route path="/:undefined"><p>Page 404</p></Route>
                     <Route path="/"><Shop/></Route>
                 </Switch>
                 </div>

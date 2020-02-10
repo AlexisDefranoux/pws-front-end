@@ -1,16 +1,13 @@
 import React, {Component} from 'react';
-import {Button, Card, Checkbox, Col, Form, Icon, Input} from "antd";
+import {Button, Card, Checkbox, Form, Icon, Input} from "antd";
 import { FormComponentProps } from 'antd/es/form';
+import {Link} from "react-router-dom";
 
-interface UserFormProps extends FormComponentProps {
-    username: string;
-    password: string;
-    remember: any;
-}
+interface LoginFormProps extends FormComponentProps {}
 
-class Login extends Component<UserFormProps, any>  {
+class Login extends Component<LoginFormProps, any>  {
 
-    handleSubmit(e: any) {
+    handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         this.props.form.validateFields((err: any, values: any) => {
             if (!err) {
@@ -24,7 +21,7 @@ class Login extends Component<UserFormProps, any>  {
         return (
             <Card title="Login" style={{maxWidth: "600px", margin: "auto"}}>
                 <Form onSubmit={this.handleSubmit} >
-                    <Form.Item>
+                    <Form.Item label={'username'}>
                         {getFieldDecorator('username', {
                             rules: [{ required: true, message: 'Please input your username!' }],
                         })(
@@ -34,7 +31,7 @@ class Login extends Component<UserFormProps, any>  {
                             />,
                         )}
                     </Form.Item>
-                    <Form.Item>
+                    <Form.Item label={'password'}>
                         {getFieldDecorator('password', {
                             rules: [{ required: true, message: 'Please input your Password!' }],
                         })(
@@ -50,13 +47,10 @@ class Login extends Component<UserFormProps, any>  {
                             valuePropName: 'checked',
                             initialValue: true,
                         })(<Checkbox>Remember me</Checkbox>)}
-                        <a className="login-form-forgot" style={{float: "right"}} href="">
-                            Forgot password
-                        </a>
                         <Button type="primary" htmlType="submit" style={{width: "100%"}}>
                             Log in
                         </Button>
-                        Or <a href="">register now!</a>
+                        Or <Link to={"/register"}>register now!</Link>
                     </Form.Item>
                 </Form>
             </Card>
@@ -64,4 +58,4 @@ class Login extends Component<UserFormProps, any>  {
     }
 }
 
-export default Form.create<UserFormProps>()(Login);
+export default Form.create<LoginFormProps>()(Login);

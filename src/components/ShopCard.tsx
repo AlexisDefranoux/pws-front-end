@@ -17,18 +17,14 @@ class ShopCard extends Component<MyProps, MyState> {
 
     render() {
         return (
-            <div className={"ShopCard"}>
-                <Card bordered={false}
-                    cover={
-                        <img src={this.state.url} alt={this.state.title + "'s image"}/>
-                    }
-                >
-                    <h3>{this.state.title}</h3>
-                    <p>{this.state.price}</p>
-                    <p>id : {this.props.id}</p>
+            <Card bordered={false}
+                  cover={<img src={this.state.url} alt={this.state.title + "'s image"}/>}>
+                <h3>{this.state.title}</h3>
+                <p>{this.state.price}</p>
+                <div style={{textAlign: 'center'}}>
                     <Button type={"primary"} icon={"shopping-cart"}>ADD TO CART</Button>
-                </Card>
-            </div>
+                </div>
+            </Card>
         )
     }
 }
