@@ -1,7 +1,8 @@
-import {Form, Select, Input, Button} from 'antd';
+import {Form, Select, Input, Button, Checkbox} from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React, { Component } from 'react';
 import UploadImage from "./UploadImage";
+import TagForm from "./TagForm";
 
 const { Option } = Select;
 
@@ -9,12 +10,13 @@ interface AddPluginFormProps extends FormComponentProps {
 
 }
 
-type MyState = { imageUrl: any };
+type MyState = { imageUrl: any, tags: string []};
 class AddPlugin extends Component<AddPluginFormProps, MyState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            imageUrl: undefined
+            imageUrl: undefined,
+            tags: [],
         };
     }
 
@@ -36,6 +38,10 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
 
     setImageValidate = (canValidateImage : any) => {
         this.setState({imageUrl: canValidateImage});
+    };
+
+    setTags = (tags : string []) => {
+        this.setState({tags: tags});
     };
 
     render() {
@@ -60,10 +66,20 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                     })(<Input/>)}
                 </Form.Item>
 
+                <Form.Item  label="Open Source">
+                    {getFieldDecorator('open_source', {
+                        valuePropName: 'checked',
+                    })(
+                        <Checkbox>
+                            Le logiciel est en Open Source
+                        </Checkbox>,
+                    )}
+                </Form.Item>
+
                 <Form.Item label="Image">
                     {getFieldDecorator('image', {
                         trigger: 'isImageValidate',
-                        rules: [{ validator: () => {return this.state.imageUrl != undefined}, required: true, message: 'Please upload your image!' }],
+                        rules: [{ validator: () => {return this.state.imageUrl !== undefined}, required: true, message: 'Please upload your image!' }],
                     })(
                             <UploadImage isImageValidate = {this.setImageValidate}/>
                     )}
@@ -85,7 +101,12 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                     )}
                 </Form.Item>
 
-                {/*TODO TAG LIBRE*/}
+                <Form.Item label="Tags">
+                    {getFieldDecorator('tags', {
+                        trigger: 'returnTags',
+                        rules: [{ required: false }],
+                    })(<TagForm returnTags = {this.setTags}/>)}
+                </Form.Item>
 
                 <Form.Item label="URL">
                     {getFieldDecorator('url', {

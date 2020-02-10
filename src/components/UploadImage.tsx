@@ -68,7 +68,7 @@ class UploadImage extends Component<MyProps, MyState> {
                 beforeUpload={beforeUpload}
                 onChange={this.handleChange}
             >
-                {imageUrl ? <img src={imageUrl} alt="image" style={{ width: '100%' }} /> : uploadButton}
+                {imageUrl ? <img src={imageUrl} alt="plugin" style={{ width: '100%' }} /> : uploadButton}
             </Upload>
         );
     }
