@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Button, Card, Form, Icon, Input, Tooltip} from "antd";
 import {FormComponentProps} from 'antd/es/form';
+import Parse from 'parse';
 
 interface RegisterFormProps extends FormComponentProps {}
 
@@ -40,11 +41,21 @@ class Register extends Component<RegisterFormProps, MyState> {
         };
     }
 
-    handleSubmit = (e: { preventDefault: () => void; }) => {
+    handleSubmit = async(e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        this.props.form.validateFields((err: any, values: any) => {
+        this.props.form.validateFields( async (err: any, values: any) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const user = new Parse.User();
+                user.set("username", this.props.form.getFieldValue('nickname'));
+                user.set("password", this.props.form.getFieldValue('password'));
+                user.set("email", this.props.form.getFieldValue('email'));
+                try {
+                    await user.signUp();
+                    console.log('register successful');
+                } catch(err) {
+                    console.error(err);
+                }
             }
         });
     };

@@ -12,6 +12,12 @@ import Detail from "./components/Detail";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
 
+
+import Parse from 'parse';
+
+Parse.initialize('parse-server-webplugin');
+Parse.serverURL = 'http://localhost:8080/parse';
+
 const App: React.FC = () => {
     return (
         <Router>
