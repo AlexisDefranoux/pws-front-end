@@ -17,7 +17,7 @@ class ZoomImg extends Component<MyProps, MyState> {
         return (
             <Card
                 cover={
-                    <img id="zoomImg" src={this.state.url}/>
+                    <img id="zoomImg" src={this.state.url} alt={this.state.url}/>
                 }
             />
         );

@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
-import {Tabs} from "antd";
 import './TryPlugin.css';
 
-
-const {TabPane} = Tabs;
 type MyProps = {};
 type MyState = {};
 

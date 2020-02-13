@@ -1,7 +1,6 @@
 import {Col, Row} from 'antd';
 import React, {Component} from 'react';
 import ShopCard from "./ShopCard";
-import {Link} from "react-router-dom";
 
 type MyProps = {};
 type MyState = { ids: number[] };

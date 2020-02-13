@@ -7,10 +7,6 @@ type MyState = {};
 
 class CommentSection extends Component<MyProps, MyState> {
 
-    constructor(props: any) {
-        super(props);
-    }
-
     data = [
         {
             author: 'Han Solo',
