@@ -71,21 +71,18 @@ class TagForm extends Component<MyProps, MyState> {
         const { tags, inputVisible, inputValue } = this.state;
         const tagChild = tags.map(this.forMap);
         return (
-            <div>
-                <div style={{ marginBottom: 16 }}>
-                    <TweenOneGroup
-                        enter={{
-                            scale: 0.8,
-                            opacity: 0,
-                            type: 'from',
-                            duration: 100,
-                        }}
-                        leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
-                        appear={false}
-                    >
-                        {tagChild}
-                    </TweenOneGroup>
-                </div>
+            <TweenOneGroup
+                enter={{
+                    scale: 0.8,
+                    opacity: 0,
+                    type: 'from',
+                    duration: 100,
+                }}
+                leave={{ opacity: 0, width: 0, scale: 0, duration: 200 }}
+                appear={false}
+            >
+                {tagChild}
+
                 {inputVisible && (
                     <Input
                         ref={this.saveInputRef}
@@ -98,12 +95,13 @@ class TagForm extends Component<MyProps, MyState> {
                         onPressEnter={this.handleInputConfirm}
                     />
                 )}
+
                 {!inputVisible && (
                     <Tag onClick={this.showInput} style={{ background: '#fff', borderStyle: 'dashed' }}>
                         <Icon type="plus" /> New Tag
                     </Tag>
                 )}
-            </div>
+            </TweenOneGroup>
         );
     }
 }
