@@ -82,7 +82,17 @@ class UploadImage extends Component<MyProps, MyState> {
                 beforeUpload={this.beforeUpload}
                 onChange={this.handleChange}
             >
-                {imageUrl ? <img src={imageUrl} alt="plugin" style={{ width: '100%' }} /> : uploadButton}
+                {
+                    imageUrl
+                        ?
+                        this.props.isZip
+                            ?
+                            <img src="https://i0.wp.com/mychromebook.fr/wp-content/uploads/2015/04/Zip-File.png?resize=500%2C300" alt="your zip" style={{ width: '100%' }} />
+                            :
+                            <img src={imageUrl} alt="your image" style={{ width: '100%' }} />
+                        :
+                        uploadButton
+                }
             </Upload>
         );
     }
