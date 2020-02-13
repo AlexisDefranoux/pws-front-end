@@ -4,6 +4,8 @@ import React, { Component } from 'react';
 import UploadImage from "./UploadImage";
 import TagForm from "./TagForm";
 
+import Parse from 'parse';
+
 const { Option } = Select;
 
 interface AddPluginFormProps extends FormComponentProps {
@@ -23,9 +25,30 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
 
     handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        this.props.form.validateFields((err: any, values: any) => {
+        this.props.form.validateFields(async (err: any, values: any) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const plugin = new (Parse.Object.extend("Plugin"))(
+                    {
+                        name: values.name,
+                        version: values.version,
+                        description: values.description,
+                        open_source: values.open_source,
+                        category: values.category,
+                        tags: "TODO",
+                        url: values.url
+                    }
+                );
+                try {
+                    await values.image.save();
+                    await values.zip_plugin.save();
+                    plugin.set("image", values.image);
+                    plugin.set("zip_plugin", values.zip_plugin);
+                    await plugin.save();
+                    console.log("success")
+                } catch (e) {
+                    console.error(e);
+                }
             }
         });
     };
@@ -71,6 +94,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                     <Form.Item  label="Open Source">
                         {getFieldDecorator('open_source', {
                             valuePropName: 'checked',
+                            initialValue: false,
                         })(
                             <Checkbox>
                                 The plugin is Open Source
@@ -120,6 +144,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
 
                     <Form.Item label="URL">
                         {getFieldDecorator('url', {
+                            initialValue: '',
                             rules: [{ required: false }],
                         })(<Input/>)}
                     </Form.Item>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import {Icon, Upload, message} from "antd";
 import {UploadChangeParam} from "antd/es/upload";
 
+import Parse from 'parse';
+
 type MyProps = { isImageValidate : Function, isZip : boolean };
 type MyState = { loading : boolean, imageUrl : any  };
 class UploadImage extends Component<MyProps, MyState> {
@@ -26,8 +28,12 @@ class UploadImage extends Component<MyProps, MyState> {
                         imageUrl,
                         loading: false,
                     });
-                    this.props.isImageValidate(imageUrl)
                 },
+            );
+            this.props.isImageValidate(
+                new Parse.File(
+                    this.props.isZip ? "plugin.zip":"profile.jpg",
+                    info.file.originFileObj)
             );
         }
     };
