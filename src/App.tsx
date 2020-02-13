@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
 
-import HeaderPage from "./components/HeaderPage";
-import FooterPage from "./components/FooterPage";
+import HeaderPage from "./components/shared/HeaderPage";
+import FooterPage from "./components/shared/FooterPage";
 import {Layout} from "antd";
 import TryPlugin from "./components/TryPlugin";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import Shop from "./components/Shop";
 import AddPluginForm from "./components/AddPluginForm";
 import Detail from "./components/Detail";
-import Login from "./components/Login";
-import Register from "./components/Register";
+import Login from "./components/auth/Login";
+import Register from "./components/auth/Register";
 
 const App: React.FC = () => {
     return (
