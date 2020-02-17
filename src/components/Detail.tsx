@@ -86,7 +86,7 @@ class Detail extends Component<MyProps, MyState> {
                 <Row>
                     <h2>Related products</h2>
                     <Col span={5}>
-                        <ShopCard id={1}/>
+                        <ShopCard id={"QbunO2P7oF"}/>
                     </Col>
                 </Row>
             </div>

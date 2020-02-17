@@ -6,7 +6,7 @@ import Parse from 'parse';
 
 type MyProps = { isImageValidate : Function, isZip : boolean };
 type MyState = { loading : boolean, imageUrl : any  };
-class UploadImage extends Component<MyProps, MyState> {
+class UploadImageZip extends Component<MyProps, MyState> {
     constructor(props : any) {
         super(props);
         this.state = {
@@ -52,14 +52,18 @@ class UploadImage extends Component<MyProps, MyState> {
     };
 
     beforeUploadZip(file: { type: string, size: number; }) {
-        const isZip = file.type === 'application/x-zip-compressed';
+        const isZip =
+            file.type === 'application/x-zip-compressed' ||
+            file.type === 'application/zip';
         if (!isZip)
             message.error('You can only upload ZIP file!');
         return isZip;
     }
 
     beforeUploadJpgPng(file: { type: string; size: number; }) {
-        const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
+        const isJpgOrPng =
+            file.type === 'image/jpeg' ||
+            file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
         }
@@ -95,7 +99,7 @@ class UploadImage extends Component<MyProps, MyState> {
                             ?
                             <img src="https://i0.wp.com/mychromebook.fr/wp-content/uploads/2015/04/Zip-File.png?resize=500%2C300" alt="your zip" style={{ width: '100%' }} />
                             :
-                            <img src={imageUrl} alt="your image" style={{ width: '100%' }} />
+                            <img src={imageUrl} alt="your logo" style={{ width: '100%' }} />
                         :
                         uploadButton
                 }
@@ -105,4 +109,4 @@ class UploadImage extends Component<MyProps, MyState> {
 }
 
 
-export default UploadImage;
+export default UploadImageZip;

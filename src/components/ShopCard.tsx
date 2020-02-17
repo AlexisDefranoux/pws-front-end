@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 
 let titles = ['AUGUR', 'B', 'CCC', '25', 'ALEXIIIIS'];
 
-type MyProps = { id: number };
+type MyProps = { id: string };
 type MyState = { url: string, title: string, price: string };
 class ShopCard extends Component<MyProps, MyState> {
     constructor(props: any) {
