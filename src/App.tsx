@@ -30,7 +30,7 @@ const App: React.FC = () => {
                         <Route path="/detail/:id" component={Detail}/>
                         <Route exact path="/login" component={Login}/>
                         <Route path="/register" component={Register}/>
-                        <Route path="/tryplugin" component={TryPlugin}/>
+                        <Route path="/tryplugin/:id" component={TryPlugin}/>
                         <Route path="/:undefined"><p>Page 404</p></Route>
                         <Route path="/" component={Shop}/>
                     </Switch>
