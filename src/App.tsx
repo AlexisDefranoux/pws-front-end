@@ -25,14 +25,14 @@ const App: React.FC = () => {
                 <HeaderPage/>
                 <div id="containerDiv" style={{padding: "78px 30px 30px 30px"}}>
                     <Switch>
-                        <Route path="/shop"><Shop/></Route>
-                        <Route path="/addplugin"><AddPluginForm/></Route>
-                        <Route path="/detail/:id"><Detail/></Route>
-                        <Route exact path="/login"><Login/></Route>
-                        <Route path="/register"><Register/></Route>
-                        <Route path="/tryplugin"><TryPlugin/></Route>
+                        <Route path="/shop" component={Shop}/>
+                        <Route path="/addplugin" component={AddPluginForm}/>
+                        <Route path="/detail/:id" component={Detail}/>
+                        <Route exact path="/login" component={Login}/>
+                        <Route path="/register" component={Register}/>
+                        <Route path="/tryplugin" component={TryPlugin}/>
                         <Route path="/:undefined"><p>Page 404</p></Route>
-                        <Route path="/"><Shop/></Route>
+                        <Route path="/" component={Shop}/>
                     </Switch>
                 </div>
                 <FooterPage/>

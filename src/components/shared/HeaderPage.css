@@ -6,6 +6,6 @@
     z-index: 1;
 }
 
-#root, #root > section, #containerDiv{
-    height: 100%;
-}
+/*#root, #root > section, #containerDiv{*/
+/*    height: 100%;*/
+/*}*/
