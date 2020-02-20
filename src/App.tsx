@@ -16,7 +16,7 @@ import Register from "./components/auth/Register";
 import Parse from 'parse';
 
 Parse.initialize('parse-server-webplugin');
-Parse.serverURL = 'http://localhost:8080/parse';
+Parse.serverURL = `${process.env.REACT_APP_API_PARSE}`;
 
 const App: React.FC = () => {
     return (
