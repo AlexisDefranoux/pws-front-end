@@ -5,6 +5,7 @@ import {Button, Card, Col, Descriptions, Icon, Rate, Row, Tabs, Tag} from "antd"
 import ShopCard from "./ShopCard";
 import {Link} from "react-router-dom";
 import CommentSection from "./CommentSection";
+import PluginUse from './plugin/plugin_use';
 
 const {TabPane} = Tabs;
 type MyProps = {};
@@ -69,7 +70,7 @@ class Detail extends Component<MyProps, MyState> {
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Tags"}>
                                     {
-                                        this.state.tags.map((item, key) => <Tag>{item}</Tag>)
+                                        this.state.tags.map((item, key) => <Tag key={item}>{item}</Tag>)
                                     }
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Price"}>{this.state.price + " €"}</Descriptions.Item>
@@ -88,6 +89,9 @@ class Detail extends Component<MyProps, MyState> {
                                 <Link to={"tryplugin"}>
                                     <Button type={"primary"}>Try {this.state.name}</Button>
                                 </Link>
+                            </TabPane>
+                            <TabPane tab={"Use it"} key={"plugin_use"}>
+                                <PluginUse pluginID="pluginlex"/>
                             </TabPane>
                             <TabPane tab={"Commentaires"} key={"commentaires"}>
                                 <CommentSection/>
