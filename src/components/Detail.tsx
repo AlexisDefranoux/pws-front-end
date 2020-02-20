@@ -1,82 +1,71 @@
 import React, {Component} from 'react';
 
-import ZoomImg from "./ZoomImg";
 import {Button, Card, Col, Descriptions, Icon, Rate, Row, Tabs, Tag} from "antd";
-import ShopCard from "./ShopCard";
 import {Link} from "react-router-dom";
 import CommentSection from "./CommentSection";
+<<<<<<< HEAD
 import PluginUse from './plugin/plugin_use';
+=======
+import Parse from "parse";
+>>>>>>> 23f5852ee0ccbce6b84da113eb9a2f9f6daf64a5
 
 const {TabPane} = Tabs;
-type MyProps = {};
-type MyState = {
-    url: string,
-    price: number,
-    name: string,
-    shortdescription: string,
-    longdescription: string,
-    category: string,
-    rating: number,
-    nbRatings: number,
-    opensource: boolean,
-    tags: string[]
-};
+type MyProps = { match: any };
+type MyState = { plugin: any; };
 
 const descRating = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 class Detail extends Component<MyProps, MyState> {
-    constructor(props: any) {
-        super(props);
-        this.state = {
-            price: 5,
-            name: "UnModule",
-            shortdescription: "WAM instrument for Amped Studio.",
-            longdescription: "AUGUR is modelled after the Prophet VS from Sequential Circuits, which was the first vector synthesizer to appear in the market in 1986. The original Prophet VS combined digital waveforms with analog filters for a very unique product for that time period. Chris Meyer (one of the original Prophet VS engineers) shares interesting background info in his blog post “The Story of the Prophet VS Although AUGUR shares Prophet VS architecture, it is not an exact emulation of the original VS. This digital synthesizer implementation by Antti Huovilainen has four digital oscillators, Antti’s world famous circuit-modelled filters and a lush chorus section. The three envelope generators, two LFOs and modulation matrix are also bundled in. It is capable of producing charasteristic Prophet VS timbres and beyond."
-                + "WAM implementation by Jari Kleimola.",
-            category: "Synthetizers",
-            url: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/SNice.svg/1200px-SNice.svg.png',
-            rating: 3,
-            nbRatings: 1000,
-            opensource: false,
-            tags: ["Cool", "Rock", "Metal"]
-        };
+
+    componentDidMount(): void {
+        let query = new Parse.Query(Parse.Object.extend("Plugin"));
+        query.get(this.props.match.params.id).then((plugin) => {
+            this.setState({ plugin: plugin.toJSON() });
+        }, (error) => {
+            console.error("Get plugin by id : " + error)
+        });
     }
 
-    handleRatingChange = (value: number) => {
-        this.setState({rating: value});
-    };
+    // handleRatingChange = (value: number) => {
+    //     this.setState({rating: value});
+    // };
 
     render() {
         return (
-            <div className="Detail">
-                <Card title={this.state.name}>
+            <div className="Detail" >
+                <Card title={Plugin.name}>
                     <Row gutter={2}>
                         <Col span={6}>
-                            <ZoomImg/>
+                            <Card bordered={false} cover={<img id="zoomImg" src={this.state?.plugin?.image.url} alt={this.state?.plugin?.image.name}/>}/>
                         </Col>
                         <Col offset={1} span={17}>
-                            <Descriptions column={1}>
+                            <Descriptions column={1} title={this.state?.plugin?.name}>
                                 <Descriptions.Item label={"Rating"}>
-                                    <span>
-                                        <Rate tooltips={descRating} onChange={this.handleRatingChange}
-                                              value={this.state.rating}/>
-                                        {this.state.nbRatings + " evaluations"}
-                                      </span>
+                                    {/*<span>*/}
+                                    {/*    <Rate tooltips={descRating} onChange={this.handleRatingChange}*/}
+                                    {/*          value={Plugin.rating}/>*/}
+                                    {/*    {Plugin.nbRatings + " evaluations"}*/}
+                                    {/*  </span>*/}
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Open source"}>
-                                    {this.state.opensource ?
-                                        <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a"/> :
-                                        <Icon type="close-circle" theme="twoTone" twoToneColor="#ff0000"/>}
-                                </Descriptions.Item>
-                                <Descriptions.Item label={"Tags"}>
                                     {
+<<<<<<< HEAD
                                         this.state.tags.map((item, key) => <Tag key={item}>{item}</Tag>)
+=======
+                                        this.state?.plugin?.open_source ?
+                                            <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a"/> :
+                                            <Icon type="close-circle" theme="twoTone" twoToneColor="#ff0000"/>
+>>>>>>> 23f5852ee0ccbce6b84da113eb9a2f9f6daf64a5
                                     }
                                 </Descriptions.Item>
-                                <Descriptions.Item label={"Price"}>{this.state.price + " €"}</Descriptions.Item>
-                                <Descriptions.Item
-                                    label={"Description"}>{this.state.shortdescription}</Descriptions.Item>
-                                <Descriptions.Item label={"Category"}>{this.state.category}</Descriptions.Item>
+                                <Descriptions.Item label={"Tags"}>{this.state?.plugin?.tags.map((item:any, key:any) => <Tag key={key}>{item}</Tag>)}</Descriptions.Item>
+                                <Descriptions.Item label={"Video"}><a target="_blank" href={this.state?.plugin?.url}>{this.state?.plugin?.url}</a></Descriptions.Item>
+                                <Descriptions.Item label={"Price"}>
+                                    {this.state?.plugin?.price === 0 ?
+                                        <Tag color="green">Free</Tag> :
+                                        <Tag color="volcano">{this.state?.plugin?.price + '€'}</Tag>}</Descriptions.Item>
+                                <Descriptions.Item label={"Description"}>{this.state?.plugin?.short_description}</Descriptions.Item>
+                                {/*<Descriptions.Item label={"Category"}>{this.state?.plugin?.category}</Descriptions.Item>*/}
                             </Descriptions>
                             <Button type={"primary"}>Add to Cart</Button>
                         </Col>
@@ -85,9 +74,9 @@ class Detail extends Component<MyProps, MyState> {
                     <Row>
                         <Tabs>
                             <TabPane tab={"Description"} key={"Description"}>
-                                <p>{this.state.longdescription}</p>
-                                <Link to={"tryplugin"}>
-                                    <Button type={"primary"}>Try {this.state.name}</Button>
+                                <p>{this.state?.plugin?.long_description}</p>
+                                <Link to={"/tryplugin"}>
+                                    <Button type={"primary"}>Try {this.state?.plugin?.name}</Button>
                                 </Link>
                             </TabPane>
                             <TabPane tab={"Use it"} key={"plugin_use"}>
@@ -100,13 +89,13 @@ class Detail extends Component<MyProps, MyState> {
                     </Row>
                 </Card>
 
-                <br/>
-                <Row>
-                    <h2>Related products</h2>
-                    <Col span={5}>
-                        <ShopCard id={1}/>
-                    </Col>
-                </Row>
+                {/*<br/>*/}
+                {/*<Row>*/}
+                {/*    <h2>Related products</h2>*/}
+                {/*    <Col span={5}>*/}
+                {/*        <ShopCard id={1}/>*/}
+                {/*    </Col>*/}
+                {/*</Row>*/}
             </div>
         );
     }

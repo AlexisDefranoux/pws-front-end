@@ -1,10 +1,11 @@
-import {Form, Select, Input, Button, Checkbox, Card} from 'antd';
+import {Form, Select, Input, Button, Checkbox, Card, InputNumber} from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React, { Component } from 'react';
-import UploadImage from "./UploadImage";
+import UploadImageZip from "./UploadImageZip";
 import TagForm from "./TagForm";
 
 import Parse from 'parse';
+import TextArea from "antd/es/input/TextArea";
 
 const { Option } = Select;
 
@@ -28,14 +29,22 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
         this.props.form.validateFields(async (err: any, values: any) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                const Category = Parse.Object.extend("Category");
+                const query = new Parse.Query(Category);
+                query.equalTo("name", values.category);
+                const results = await query.find();
+                if (results.length === 0)
+                    console.error("Category " + values.category + " does not exist.");
+
                 const plugin = new (Parse.Object.extend("Plugin"))(
                     {
                         name: values.name,
                         version: values.version,
-                        description: values.description,
+                        short_description: values.short_description,
+                        long_description: values.long_description,
                         open_source: values.open_source,
-                        category: values.category,
-                        tags: "TODO",
+                        category: results[0], //TODO
+                        tags: values.tags,
                         url: values.url
                     }
                 );
@@ -85,12 +94,24 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                         })(<Input/>)}
                     </Form.Item>
 
-                    <Form.Item label="Description">
-                        {getFieldDecorator('description', {
+                    <Form.Item label="Short Description">
+                        {getFieldDecorator('short_description', {
                             rules: [{ required: true, message: 'Please input your description!' }],
                         })(<Input/>)}
                     </Form.Item>
 
+                    <Form.Item label="Long Description">
+                        {getFieldDecorator('long_description', {
+                            rules: [{ required: true, message: 'Please input your long description!' }],
+                        })(<TextArea rows={3}/>)}
+                    </Form.Item>
+
+                    <Form.Item label="Price">
+                        {getFieldDecorator('price', {
+                            rules: [{ required: true, message: 'Please input your price!' }],
+                        })(<InputNumber min={0}/>)}
+                        <span className="ant-form-text">€</span>
+                    </Form.Item>
                     <Form.Item  label="Open Source">
                         {getFieldDecorator('open_source', {
                             valuePropName: 'checked',
@@ -107,7 +128,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                             trigger: 'isImageValidate',
                             rules: [{ validator: () => {return this.state.imageUrl !== undefined}, required: true, message: 'Please upload your image!' }],
                         })(
-                                <UploadImage isImageValidate = {this.setImageValidate} isZip={false}/>
+                                <UploadImageZip isImageValidate = {this.setImageValidate} isZip={false}/>
                         )}
                     </Form.Item>
 
@@ -116,7 +137,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                             trigger: 'isImageValidate',
                             rules: [{ validator: () => {return this.state.imageUrl !== undefined}, required: true, message: 'Please upload your zip!' }],
                         })(
-                            <UploadImage isImageValidate = {this.setImageValidate} isZip={true}/>
+                            <UploadImageZip isImageValidate = {this.setImageValidate} isZip={true}/>
                         )}
                     </Form.Item>
 
