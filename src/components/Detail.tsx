@@ -3,11 +3,8 @@ import React, {Component} from 'react';
 import {Button, Card, Col, Descriptions, Icon, Rate, Row, Tabs, Tag} from "antd";
 import {Link} from "react-router-dom";
 import CommentSection from "./CommentSection";
-<<<<<<< HEAD
 import PluginUse from './plugin/plugin_use';
-=======
 import Parse from "parse";
->>>>>>> 23f5852ee0ccbce6b84da113eb9a2f9f6daf64a5
 
 const {TabPane} = Tabs;
 type MyProps = { match: any };
@@ -49,13 +46,9 @@ class Detail extends Component<MyProps, MyState> {
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Open source"}>
                                     {
-<<<<<<< HEAD
-                                        this.state.tags.map((item, key) => <Tag key={item}>{item}</Tag>)
-=======
                                         this.state?.plugin?.open_source ?
                                             <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a"/> :
                                             <Icon type="close-circle" theme="twoTone" twoToneColor="#ff0000"/>
->>>>>>> 23f5852ee0ccbce6b84da113eb9a2f9f6daf64a5
                                     }
                                 </Descriptions.Item>
                                 <Descriptions.Item label={"Tags"}>{this.state?.plugin?.tags.map((item:any, key:any) => <Tag key={key}>{item}</Tag>)}</Descriptions.Item>
