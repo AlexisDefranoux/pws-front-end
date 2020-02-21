@@ -1,14 +1,17 @@
-import {Button, Comment, List, Tooltip} from 'antd';
-import moment from 'moment';
+import {Button, Comment, Icon, List, Tooltip} from 'antd';
 import React, {Component} from "react";
 import Form from 'antd/es/form';
 import TextArea from 'antd/lib/input/TextArea';
+import Parse from "parse";
 
-type MyProps = {};
+type MyProps = {
+    plugin: any;
+};
 type MyState = {
     comments: any[],
+    user: any,
     submitting: boolean,
-    newcommentvalue: string
+    newComment: string
 };
 
 class CommentSection extends Component<MyProps, MyState> {
@@ -18,73 +21,47 @@ class CommentSection extends Component<MyProps, MyState> {
         this.state = {
             comments: [],
             submitting: false,
-            newcommentvalue: '',
+            newComment: '',
+            user: ''
         }
     }
 
+    async componentDidMount(): Promise<void> {
+        let query = new Parse.Query(Parse.Object.extend("Comment"));
+        query.equalTo("plugin", this.props.plugin);
+        const comments = await query.find();
+        this.setState({ comments: comments });
+        console.log(comments);
 
-    componentDidMount(): void {
-        this.setState({
-            comments: this.getComments()
+        //TODO REAL COMMENTS USERS
+        let query2 = new Parse.Query(Parse.Object.extend("User"));
+        const user = await query2.get('jFtSSqnAaG');
+        this.setState({ user: user });
+    }
+
+
+    handleSubmit = async() => {
+        const comment = new (Parse.Object.extend("Comment"))({
+            plugin: this.props.plugin,
+            user: this.state.user,
+            description: this.state.newComment,
         });
-    }
 
-    getComments() {
-        // sera plus tard chargé depuis le serveur
-
-        return [
-            {
-                author: 'Han Solo',
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                content:
-                    "We supply a series of design principles, practical patterns and high quality design" +
-                    "resources (Sketch and Axure), to help people create their product prototypes beautifully and" +
-                    "efficiently."
-                ,
-                datetime: (
-                    moment()
-                        .subtract(1, 'days')
-                        .fromNow()
-                ),
-                datetimestring: (moment()
-                        .subtract(1, 'days')
-                        .format('YYYY-MM-DD HH:mm:ss')
-                )
-            },
-            {
-                author: 'Obi wan',
-                avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
-                content:
-                    "YES OF COURSE"
-                ,
-                datetime: (
-                    moment()
-                        .subtract(3, 'days')
-                        .fromNow()
-                ),
-                datetimestring: (moment()
-                        .subtract(3, 'days')
-                        .format('YYYY-MM-DD HH:mm:ss')
-                )
-            }
-        ];
-    }
-
-    handleSubmit = () => {
-        if (!this.state.newcommentvalue) {
-            return;
+        try {
+            await comment.save();
+            this.state.comments.push(comment);
+            console.log("success");
+            this.setState({
+                newComment: '',
+            });
+        } catch (e) {
+            console.error(e);
         }
-
-        this.setState({
-            submitting: true,
-        });
-
-        //TODO Envoyer commentaire serveur et rafraichir section commntaires
     };
 
     handleChange = (e: { target: { value: string; }; }) => {
         this.setState({
-            newcommentvalue: e.target.value,
+            newComment: e.target.value,
         });
     };
 
@@ -92,19 +69,19 @@ class CommentSection extends Component<MyProps, MyState> {
         return (
             <div className="commentSection">
                 <List
-                    header={`${this.state.comments.length} comments`}
                     itemLayout="horizontal"
                     dataSource={this.state.comments}
                     renderItem={item => (
                         <li>
+                            {console.log(item)}
                             <Comment
-                                author={item.author}
-                                avatar={item.avatar}
-                                content={<p>{item.content}</p>}
+                                author={this.state.user.username}
+                                avatar={<Icon type="user"/>}
+                                content={<p>{item.attributes.description}</p>}
                                 datetime={
-                                    <Tooltip title={item.datetimestring}>
+                                    <Tooltip title={item.createdAt.toLocaleDateString() + ' at ' + item.createdAt.toLocaleTimeString()}>
                                         <span>
-                                          {item.datetime}
+                                          {item.createdAt.toLocaleDateString() + ' at ' + item.createdAt.toLocaleTimeString()}
                                         </span>
                                     </Tooltip>
                                 }
@@ -113,7 +90,7 @@ class CommentSection extends Component<MyProps, MyState> {
                     )}
                 />
                 <Form.Item>
-                    <TextArea rows={4} onChange={this.handleChange} value={this.state.newcommentvalue}/>
+                    <TextArea rows={4} onChange={this.handleChange} value={this.state.newComment}/>
                 </Form.Item>
                 <Form.Item>
                     <Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit}
