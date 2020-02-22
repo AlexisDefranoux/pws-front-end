@@ -3,9 +3,10 @@ import React, {Component} from 'react';
 import {Button, Card, notification} from "antd";
 import Parse from "parse";
 import TryPlugin from "./TryPlugin";
+import {Redirect} from "react-router-dom";
 
 type MyProps = { match: any };
-type MyState = { plugin: any, testPassed: boolean };
+type MyState = { plugin: any, testPassed: boolean, redirect?: string };
 
 class PublishOfficialStore extends Component<MyProps, MyState> {
 
@@ -41,10 +42,12 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
                 type: "success",
                 message: 'Your plugin has been posted to the official store',
             });
+            this.setState({redirect: '/myplugins/'})
         }
     }
 
     render() {
+        if(this.state?.redirect) return <Redirect to={this.state.redirect}/>;
         return (
             <div className="PublishOfficialStore" >
                 <Card title={Plugin.name}>
