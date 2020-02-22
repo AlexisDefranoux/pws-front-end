@@ -93,7 +93,15 @@ class Detail extends Component<MyProps, MyState> {
 
                                 <Descriptions.Item label={"Open source"}>
                                     {
-                                        this.state?.plugin?.open_source ?
+                                        this.state?.plugin?.attributes.open_source ?
+                                            <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a"/> :
+                                            <Icon type="close-circle" theme="twoTone" twoToneColor="#ff0000"/>
+                                    }
+                                </Descriptions.Item>
+
+                                <Descriptions.Item label={"Official store"}>
+                                    {
+                                        this.state?.plugin?.attributes.official ?
                                             <Icon type="check-circle" theme="twoTone" twoToneColor="#52c41a"/> :
                                             <Icon type="close-circle" theme="twoTone" twoToneColor="#ff0000"/>
                                     }
@@ -131,7 +139,8 @@ class Detail extends Component<MyProps, MyState> {
                             </TabPane>
 
                             <TabPane tab={"Try it"} key={"Try it"}>
-                                <PluginUse pluginID="pluginlex"/>
+                                <PluginUse pluginID={this.props.match.params.id}/>
+                                <p>TODO change css</p>
                             </TabPane>
 
                             <TabPane tab={"Comments"} key={"Comments"}>

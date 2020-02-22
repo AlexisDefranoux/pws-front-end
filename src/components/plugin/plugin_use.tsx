@@ -19,7 +19,7 @@ const PluginUse: React.FC<{pluginID: string}> = (props) => {
     const [playerState, setPlayerState] = useState(
         {
             playing: false, 
-            url: `${process.env.REACT_APP_PLUGINS_URL}CleanGuitarRiff.mp3`
+            url: `${url_plugin}CleanGuitarRiff.mp3`
         });
 
     const loadPlugin = (info: any) => {
