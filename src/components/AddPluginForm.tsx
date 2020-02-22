@@ -1,4 +1,4 @@
-import {Form, Select, Input, Button, Checkbox, Card, InputNumber} from 'antd';
+import {Form, Select, Input, Button, Checkbox, Card, InputNumber, notification} from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import React, { Component } from 'react';
 import UploadImageZip from "./UploadImageZip";
@@ -9,9 +9,7 @@ import TextArea from "antd/es/input/TextArea";
 
 const { Option } = Select;
 
-interface AddPluginFormProps extends FormComponentProps {
-
-}
+interface AddPluginFormProps extends FormComponentProps {}
 
 type MyState = { imageUrl: any, tags: string [], categories: string[]};
 class AddPlugin extends Component<AddPluginFormProps, MyState> {
@@ -54,8 +52,15 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                     plugin.set("image", values.image);
                     plugin.set("zip_plugin", values.zip_plugin);
                     await plugin.save();
-                    console.log("success")
+                    notification.open({
+                        type: "success",
+                        message: 'Your plugin has been posted',
+                    });
                 } catch (e) {
+                    notification.open({
+                        type: "error",
+                        message: 'Failed to post your plugin',
+                    });
                     console.error(e);
                 }
             }
