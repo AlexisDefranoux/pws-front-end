@@ -25,10 +25,10 @@ class Shop extends Component<MyProps, MyState> {
 
     render() {
         return (
-            <Row gutter={[50, 20]}>
+            <Row gutter={[50, 20]} type='flex'>
                 {
                     this.state.ids.map(id =>
-                        <Col key={id} span={6} style={{maxWidth: '400px', minWidth: '250px'}}>
+                        <Col key={id}>
                             <ShopCard id={id}/>
                         </Col>
                     )

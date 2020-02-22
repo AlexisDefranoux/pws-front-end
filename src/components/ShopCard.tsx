@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, Button, Tag} from "antd";
+import {Card, Button, Tag, Row, Col} from "antd";
 import {Link} from "react-router-dom";
 import Parse from "parse";
 
@@ -20,15 +20,21 @@ class ShopCard extends Component<MyProps, MyState> {
     render() {
         return (
             <Link to={"/detail/" + this.props.id}>
-                <Card style={{minHeight: '400px', maxHeight: '400px'}} bordered={false} cover={<img id="zoomImg" src={this.state?.plugin?.image.url} alt={this.state?.plugin?.image.name}/>}>
-                    <h3>{this.state?.plugin?.name}</h3>
-                    <p>{this.state?.plugin?.price === 0 ?
+                <Card bodyStyle={{padding: 15}} style={{width: 300}} bordered={false} cover={<div style={{width: 300, height: 200, overflow: 'hidden'}}>
+                    <img style={{width: '100%', height: 'auto'}} id="zoomImg" src={this.state?.plugin?.image.url} alt={this.state?.plugin?.image.name} />
+                    </div>}>
+                    <Row type='flex' justify='space-between'>
+                        <Col span={6}>
+                            <h3>{this.state?.plugin?.name}</h3>
+                        </Col>
+                        <Col span={6}>
+                            <Button style={{float: 'right'}} type={"primary"} icon={"shopping-cart"} />
+                        </Col>
+                    </Row>
+                    <p style={{marginBottom: 0}}>{this.state?.plugin?.price === 0 ?
                         <Tag color="green">Free</Tag> :
                         <Tag color="volcano">{this.state?.plugin?.price + '€'}</Tag>}
                     </p>
-                    <div style={{textAlign: 'center'}}>
-                        <Button type={"primary"} icon={"shopping-cart"}>ADD TO CART</Button>
-                    </div>
                 </Card>
             </Link>
         )
