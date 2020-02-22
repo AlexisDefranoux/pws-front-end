@@ -6,12 +6,13 @@ import TagForm from "./TagForm";
 
 import Parse from 'parse';
 import TextArea from "antd/es/input/TextArea";
+import {Redirect} from "react-router-dom";
 
 const { Option } = Select;
 
 interface AddPluginFormProps extends FormComponentProps {}
 
-type MyState = { imageUrl: any, tags: string [], categories: string[]};
+type MyState = { imageUrl: any, tags: string [], categories: string[], redirect?: string};
 class AddPlugin extends Component<AddPluginFormProps, MyState> {
     constructor(props: any) {
         super(props);
@@ -19,6 +20,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
             imageUrl: undefined,
             tags: [],
             categories: [],
+            redirect: undefined
         };
     }
 
@@ -55,7 +57,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                         tags: values.tags,
                         url: values.url,
                         official: false,
-                        //user: "ormdASGkOR", //TODO
+                        user: Parse.User.current(),
                     }
                 );
                 try {
@@ -63,11 +65,8 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                     await values.zip_plugin.save();
                     plugin.set("image", values.image);
                     plugin.set("zip_plugin", values.zip_plugin);
-                    await plugin.save();
-                    notification.open({
-                        type: "success",
-                        message: 'Your plugin has been posted',
-                    });
+                    const finalPlugin = await plugin.save();
+                    this.setState({redirect: '/detail/'+ finalPlugin.id});
                 } catch (e) {
                     notification.open({
                         type: "error",
@@ -95,6 +94,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
     };
 
     render() {
+        if(this.state.redirect) return <Redirect to={this.state.redirect}/>;
         const { getFieldDecorator } = this.props.form;
         return (
             <Card title="Add a plugin">

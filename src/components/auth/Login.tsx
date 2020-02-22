@@ -12,9 +12,8 @@ class Login extends Component<LoginFormProps, any>  {
         e.preventDefault();
         this.props.form.validateFields(async (err: any, values: any) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 try {
-                    const user = await Parse.User.logIn(values.username, values.password);
+                    await Parse.User.logIn(values.username, values.password);
                     this.setState({});
                 } catch(err) {
                     console.error(err);
@@ -24,7 +23,7 @@ class Login extends Component<LoginFormProps, any>  {
     };
 
     render() {
-        if(Parse.User.current()) return <Redirect to='/'/>
+        if(Parse.User.current()) return <Redirect to='/'/>;
         const { getFieldDecorator } = this.props.form;
         return (
             <Card title="Login" style={{maxWidth: "600px", margin: "auto"}}>
