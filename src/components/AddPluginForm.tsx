@@ -18,8 +18,17 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
         this.state = {
             imageUrl: undefined,
             tags: [],
-            categories: ["distortion", "equalization", "tuner"],
+            categories: [],
         };
+    }
+
+    async componentDidMount(): Promise<void> {
+        const Category = Parse.Object.extend("Category");
+        const query = new Parse.Query(Category);
+        const results = await query.find();
+        let categories: string[] = [];
+        results.forEach(e => categories.push(e.attributes.name));
+        this.setState({categories: categories});
     }
 
     handleSubmit = (e: { preventDefault: () => void; }) => {
@@ -41,9 +50,12 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                         short_description: values.short_description,
                         long_description: values.long_description,
                         open_source: values.open_source,
-                        category: results[0], //TODO
+                        price: values.price,
+                        category: results[0],
                         tags: values.tags,
-                        url: values.url
+                        url: values.url,
+                        official: false,
+                        //user: "ormdASGkOR", //TODO
                     }
                 );
                 try {
