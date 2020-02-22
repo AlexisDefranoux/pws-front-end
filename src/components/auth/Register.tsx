@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Form, Icon, Input, Tooltip} from "antd";
+import {Button, Card, Form, Icon, Input, notification, Tooltip} from "antd";
 import {FormComponentProps} from 'antd/es/form';
 import Parse from 'parse';
 import { Redirect } from 'react-router-dom';
@@ -59,6 +59,10 @@ class Register extends Component<RegisterFormProps, MyState> {
                         return {redirect: '/shop', confirmDirty: state.confirmDirty};
                     });
                 } catch(err) {
+                    notification.open({
+                        type: "error",
+                        message: 'Failed to register you',
+                    });
                     console.error(err);
                 }
             }

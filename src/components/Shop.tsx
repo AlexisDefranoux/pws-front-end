@@ -1,51 +1,47 @@
-import {Checkbox, Col, Row} from 'antd';
+import {Checkbox, Col, Row, Switch} from 'antd';
 import React, {Component} from 'react';
 import ShopCard from "./ShopCard";
 import Parse from 'parse';
 
 type MyProps = {};
-type MyState = { ids: string[], official_only: boolean };
+type MyState = { plugins: any[], onlyOfficial: boolean };
 
 class Shop extends Component<MyProps, MyState> {
+
     constructor(props: any) {
         super(props);
         this.state = {
-            ids: [],
-            official_only: true
+            plugins: [],
+            onlyOfficial: true
         };
     }
 
     async componentDidMount(): Promise<void> {
-        let Plugin = Parse.Object.extend("Plugin");
-        let query = new Parse.Query(Plugin);
-        console.log(this.state.official_only);
-        if (this.state.official_only)
-            query.equalTo("official", true);
-        const results = await query.find();
-        let a: string[] = [];
-        results.forEach(e => a.push(e.id));
-        this.setState({ids: a});
+        this.getPlugins(true);
+    }
+
+    async getPlugins(onlyOfficial: boolean): Promise<void>{
+        let query = new Parse.Query(Parse.Object.extend("Plugin"));
+        if (onlyOfficial) query.equalTo("official", true);
+        const plugins = await query.find();
+        this.setState({plugins: plugins});
     }
 
     async onChange() {
-        this.setState({official_only: !this.state.official_only})
-        this.componentDidMount();
+        this.getPlugins(!this.state.onlyOfficial);
+        this.setState({onlyOfficial: !this.state.onlyOfficial});
     }
 
     render() {
         return (
             <div>
-                <Checkbox onChange={this.onChange.bind(this)}>
-                    Official plugins only
-                </Checkbox>
+                <div style={{marginBottom: '15px'}}><Switch defaultChecked={this.state.onlyOfficial} onChange={this.onChange.bind(this)}/> Official plugins</div>
                 <Row gutter={[50, 20]} type='flex'>
-                    {
-                        this.state.ids.map(id =>
-                            <Col key={id}>
-                                <ShopCard id={id}/>
-                            </Col>
-                        )
-                    }
+                    {this.state?.plugins?.map(plugin =>
+                        <Col key={plugin.id}>
+                            <ShopCard plugin={plugin}/>
+                        </Col>
+                    )}
                 </Row>
             </div>
         )
