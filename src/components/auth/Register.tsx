@@ -55,6 +55,10 @@ class Register extends Component<RegisterFormProps, MyState> {
                 user.set("email", this.props.form.getFieldValue('email'));
                 try {
                     await user.signUp();
+                    notification.open({
+                        type: "success",
+                        message: 'Welcome' + values.username,
+                    });
                     this.setState(state => {
                         return {redirect: '/shop', confirmDirty: state.confirmDirty};
                     });

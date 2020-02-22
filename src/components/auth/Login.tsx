@@ -14,6 +14,10 @@ class Login extends Component<LoginFormProps, any>  {
             if (!err) {
                 try {
                     await Parse.User.logIn(values.username, values.password);
+                    notification.open({
+                        type: "success",
+                        message: 'Welcome' + values.username,
+                    });
                     this.setState({});
                 } catch(err) {
                     notification.open({

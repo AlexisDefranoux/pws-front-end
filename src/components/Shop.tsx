@@ -1,4 +1,4 @@
-import {Checkbox, Col, Row, Switch} from 'antd';
+import {Col, Row, Switch} from 'antd';
 import React, {Component} from 'react';
 import ShopCard from "./ShopCard";
 import Parse from 'parse';

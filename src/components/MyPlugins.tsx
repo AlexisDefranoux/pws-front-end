@@ -16,17 +16,14 @@ class MyPlugins extends Component<MyProps, MyState> {
     }
 
     async componentDidMount(): Promise<void> {
-        let query2 = new Parse.Query(Parse.Object.extend("User"));
-        const user = await query2.get('ormdASGkOR');
-
-        var Plugin = Parse.Object.extend("Plugin");
-        var query = new Parse.Query(Plugin);
-        query.equalTo("user", user);
+        let Plugin = Parse.Object.extend("Plugin");
+        let query = new Parse.Query(Plugin);
+        query.equalTo("user", Parse.User.current());
         query.equalTo("official", true);
         const results1 = await query.find();
 
         query = new Parse.Query(Plugin);
-        query.equalTo("user", user);
+        query.equalTo("user", Parse.User.current());
         query.equalTo("official", false);
         const results2 = await query.find();
 

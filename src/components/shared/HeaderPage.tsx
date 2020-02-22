@@ -25,12 +25,12 @@ class HeaderPage extends Component<MyProps, MyState> {
                         <Link to="/shop"><Icon type="shop"/>Shop</Link>
                     </Menu.Item>
                     {Parse.User.current() &&
-                    <Menu.Item key="2">
-                        <Link to="/addplugin"><Icon type="file-add"/>Add a plugin</Link>
-                    </Menu.Item>}
-                    {Parse.User.current() &&
                     <Menu.Item key="3">
                         <Link to="/myplugins"><Icon type="shop"/>My plugins</Link>
+                    </Menu.Item>}
+                    {Parse.User.current() &&
+                    <Menu.Item key="2">
+                        <Link to="/addplugin"><Icon type="file-add"/>Add a plugin</Link>
                     </Menu.Item>}
                     {!Parse.User.current() &&
                     <Menu.Item style={{float: "right"}} key="4">

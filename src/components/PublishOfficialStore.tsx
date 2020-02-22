@@ -22,7 +22,7 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
     }
 
     getPluginTestResults(total: number, failure: number) : void {
-        this.setState({testPassed: (failure == 0 && total > 0)});
+        this.setState({testPassed: (failure === 0 && total > 0)});
     }
 
     async handleClick() {

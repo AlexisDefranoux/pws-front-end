@@ -66,6 +66,10 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                     plugin.set("image", values.image);
                     plugin.set("zip_plugin", values.zip_plugin);
                     const finalPlugin = await plugin.save();
+                    notification.open({
+                        type: "success",
+                        message: 'Your plugin has been posted',
+                    });
                     this.setState({redirect: '/detail/'+ finalPlugin.id});
                 } catch (e) {
                     notification.open({
