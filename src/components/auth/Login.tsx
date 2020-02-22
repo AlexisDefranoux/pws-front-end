@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Card, Checkbox, Form, Icon, Input} from "antd";
+import {Button, Card, Checkbox, Form, Icon, Input, notification} from "antd";
 import { FormComponentProps } from 'antd/es/form';
 import {Link, Redirect} from "react-router-dom";
 import Parse from 'parse';
@@ -16,6 +16,10 @@ class Login extends Component<LoginFormProps, any>  {
                     await Parse.User.logIn(values.username, values.password);
                     this.setState({});
                 } catch(err) {
+                    notification.open({
+                        type: "error",
+                        message: 'Failed to log in you',
+                    });
                     console.error(err);
                 }
             }
