@@ -6,7 +6,7 @@ import './TryPlugin.css';
 //import '../../node_modules/mocha/mocha.js'
 //import '../../node_modules/chai/chai.js' //marche pas
 
-const TryPlugin: React.FC<{pluginID: string}> = (props) => {
+const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
 
@@ -140,7 +140,9 @@ const TryPlugin: React.FC<{pluginID: string}> = (props) => {
                 return expect(plugin.node.numberOfOutputs).to.exist;
             });
         });
-        mocha.run()
+
+        const run = mocha.run();
+        props.testResults(run.total, run.failures);
     };
 
     useEffect(() => {
