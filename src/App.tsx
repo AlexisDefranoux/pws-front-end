@@ -15,6 +15,8 @@ import Register from "./components/auth/Register";
 
 
 import Parse from 'parse';
+import MyPlugins from "./components/MyPlugins";
+import PublishOfficialStore from "./components/PublishOfficialStore";
 
 Parse.initialize('parse-server-webplugin');
 Parse.serverURL = `${process.env.REACT_APP_API_PARSE}`;
@@ -28,7 +30,9 @@ const App: React.FC = () => {
                     <Switch>
                         <Route path="/shop" component={Shop}/>
                         <PrivateRoute path="/addplugin"><AddPluginForm/></PrivateRoute>
+                        <Route path="/myplugins" component={MyPlugins}/>
                         <Route path="/detail/:id" component={Detail}/>
+                        <Route path="/publicofficialstore/:id" component={PublishOfficialStore}/>
                         <Route exact path="/login" component={Login}/>
                         <Route path="/register" component={Register}/>
                         <Route path="/tryplugin/:id" component={TryPlugin}/>

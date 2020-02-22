@@ -27,12 +27,15 @@ class HeaderPage extends Component<MyProps, MyState> {
                     <Menu.Item key="2">
                         <Link to="/addplugin"><Icon type="file-add"/>Add a plugin</Link>
                     </Menu.Item>
-                    {!Parse.User.current() && 
+                    <Menu.Item key="3">
+                        <Link to="/myplugins"><Icon type="shop"/>My plugins</Link>
+                    </Menu.Item>
+                    {!Parse.User.current() &&
                     <Menu.Item style={{float: "right"}} key="4">
                         <Link to="/login"><Icon type="user"/>Login</Link>
                     </Menu.Item>
                     }
-                    <Menu.Item style={{float: "right"}} key="3" disabled>
+                    <Menu.Item style={{float: "right"}} key="5" disabled>
                         <Badge count={5}><Icon type="shopping-cart"/></Badge>
                     </Menu.Item>
                 </Menu>
