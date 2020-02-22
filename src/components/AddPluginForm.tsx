@@ -180,7 +180,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                         })(<TagForm returnTags = {this.setTags}/>)}
                     </Form.Item>
 
-                    <Form.Item label="URL">
+                    <Form.Item label="Youtube video ID">
                         {getFieldDecorator('url', {
                             initialValue: '',
                             rules: [{ required: false }],

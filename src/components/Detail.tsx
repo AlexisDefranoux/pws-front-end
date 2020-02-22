@@ -126,7 +126,8 @@ class Detail extends Component<MyProps, MyState> {
 
                             <TabPane tab={"Description"} key={"Description"}>
                                 <Row>{this.state?.plugin?.attributes.long_description}</Row><br/>
-                                <iframe title="youtube" width="560" height="315" src={'https://www.youtube.com/embed/' + this.state?.plugin?.attributes.url} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"/>
+                                {this.state?.plugin?.attributes.url &&
+                                <iframe title="youtube" width="560" height="315" src={'https://www.youtube.com/embed/' + this.state?.plugin?.attributes.url} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"/>}
                             </TabPane>
 
                             <TabPane tab={"Try it"} key={"Try it"}>
