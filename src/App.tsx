@@ -1,5 +1,4 @@
 import React from 'react';
-import './App.css';
 
 import HeaderPage from "./components/shared/HeaderPage";
 import FooterPage from "./components/shared/FooterPage";
@@ -24,9 +23,9 @@ Parse.serverURL = `${process.env.REACT_APP_API_PARSE}`;
 const App: React.FC = () => {
     return (
         <Router>
-            <Layout className={"test"}>
+            <Layout>
                 <HeaderPage/>
-                <div id="containerDiv" style={{padding: "78px 30px 30px 30px"}}>
+                <div style={{padding: "78px 30px 30px 30px"}}>
                     <Switch>
                         <Route path="/shop" component={Shop}/>
                         <PrivateRoute path="/addplugin"><AddPluginForm/></PrivateRoute>

@@ -99,6 +99,7 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
 
     render() {
         if(this.state.redirect) return <Redirect to={this.state.redirect}/>;
+        if(!Parse.User.current()) return <Redirect to='/login'/>;
         const { getFieldDecorator } = this.props.form;
         return (
             <Card title="Add a plugin">

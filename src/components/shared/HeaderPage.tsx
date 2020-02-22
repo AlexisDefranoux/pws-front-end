@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Badge, Icon, Menu} from "antd";
+import {Icon, Menu} from "antd";
 import './HeaderPage.css'
 
 import { Link } from 'react-router-dom';
@@ -26,7 +26,7 @@ class HeaderPage extends Component<MyProps, MyState> {
                     </Menu.Item>
                     {Parse.User.current() &&
                     <Menu.Item key="3">
-                        <Link to="/myplugins"><Icon type="shop"/>My plugins</Link>
+                        <Link to="/myplugins"><Icon type="folder"/>My plugins</Link>
                     </Menu.Item>}
                     {Parse.User.current() &&
                     <Menu.Item key="2">
@@ -40,9 +40,9 @@ class HeaderPage extends Component<MyProps, MyState> {
                     <Menu.Item disabled style={{float: "right"}} key="4">
                         <Icon type="user"/>Welcome {Parse.User.current()?.attributes.username}
                     </Menu.Item>}
-                    <Menu.Item style={{float: "right"}} key="5" disabled>
-                        <Badge count={2}><Icon type="shopping-cart"/></Badge>
-                    </Menu.Item>
+                    {/*<Menu.Item style={{float: "right"}} key="5" disabled>*/}
+                    {/*    <Badge count={2}><Icon type="shopping-cart"/></Badge>*/}
+                    {/*</Menu.Item>*/}
                 </Menu>
             </header>
         );

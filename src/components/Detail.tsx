@@ -125,7 +125,7 @@ class Detail extends Component<MyProps, MyState> {
                                 </Descriptions.Item>
 
                             </Descriptions>
-                            <Button type={"primary"}>Download</Button>
+                            <Button type={"primary"} icon={"download"}>Download</Button>
                         </Col>
                     </Row>
 
@@ -140,7 +140,6 @@ class Detail extends Component<MyProps, MyState> {
 
                             <TabPane tab={"Try it"} key={"Try it"}>
                                 <PluginUse pluginID={this.props.match.params.id}/>
-                                <p>TODO change css</p>
                             </TabPane>
 
                             <TabPane tab={"Comments"} key={"Comments"}>

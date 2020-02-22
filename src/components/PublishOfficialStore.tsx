@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import {Button, Card, notification} from "antd";
+import {Button, Card, notification, Row} from "antd";
 import Parse from "parse";
 import TryPlugin from "./TryPlugin";
 import {Redirect} from "react-router-dom";
@@ -42,22 +42,23 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
                 type: "success",
                 message: 'Your plugin has been posted to the official store',
             });
-            this.setState({redirect: '/myplugins/'})
+            this.setState({redirect: '/detail/' + results[0].id})
         }
     }
 
     render() {
+        if(!Parse.User.current()) return <Redirect to='/login'/>;
         if(this.state?.redirect) return <Redirect to={this.state.redirect}/>;
         return (
             <div className="PublishOfficialStore" >
-                <Card title={Plugin.name}>
-                    {
-                        this.state?.plugin?
-                            <TryPlugin pluginID={this.state.plugin.objectId} testResults={this.getPluginTestResults.bind(this)}/>
-                            :
-                            <p>Chargement du plugin</p>
+                <Card title={'Request to the official store'}>
+                    <Row type={'flex'} justify={"center"} style={{marginBottom: '15px'}}>
+                        <Button icon="check" type={"primary"} onClick={this.handleClick.bind(this)}>Publish to the official store</Button>
+                    </Row>
+                    {this.state?.plugin?
+                        <TryPlugin pluginID={this.state.plugin.objectId} testResults={this.getPluginTestResults.bind(this)}/> :
+                        <p>Loading...</p>
                     }
-                    <Button onClick={this.handleClick.bind(this)}>Publish to the official store</Button>
                 </Card>
             </div>
         );

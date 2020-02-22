@@ -11,9 +11,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-
-#root, .test {
-  /*min-height: 100% !important;*/
-  /*min-width: 100% !important;*/
-}
-

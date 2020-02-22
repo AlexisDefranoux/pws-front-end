@@ -1,7 +1,8 @@
-import {Col, Row} from 'antd';
+import {Card, Col, Row} from 'antd';
 import React, {Component} from 'react';
 import Parse from 'parse';
 import MyPluginsList from "./MyPluginsList";
+import {Redirect} from "react-router-dom";
 
 type MyProps = {};
 type MyState = { ids_official: any[], ids_non_official: any[] };
@@ -34,16 +35,18 @@ class MyPlugins extends Component<MyProps, MyState> {
     }
 
     render() {
+        if(!Parse.User.current()) return <Redirect to='/login'/>;
         return (
-            <Row className="MyPlugins">
-                <Col id="official" span={11}>
-                    <h1>Officials</h1>
-                    <MyPluginsList data={this.state.ids_official}/>
+            <Row className="MyPlugins" type={'flex'} justify={"space-around"}>
+                <Col span={11} style={{marginBottom: '15px'}}>
+                    <Card title={'Officials'}>
+                        <MyPluginsList data={this.state.ids_official}/>
+                    </Card>
                 </Col>
-                <Col span={2}/>
-                <Col id="non-official" span={11}>
-                    <h1>Non-officials</h1>
-                    <MyPluginsList data={this.state.ids_non_official}/>
+                <Col span={11}>
+                    <Card title={'Unofficial'}>
+                        <MyPluginsList data={this.state.ids_non_official}/>
+                    </Card>
                 </Col>
             </Row>
         )

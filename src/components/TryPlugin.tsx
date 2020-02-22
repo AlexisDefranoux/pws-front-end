@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState, MutableRefObject } from 'react';
-import { Icon, Row, Col, Button, Input} from 'antd';
+import {Icon, Row, Col, Input, Card} from 'antd';
 import useScript from '../hooks/useScript';
 import axios from 'axios';
-import './TryPlugin.css';
 //import '../../node_modules/mocha/mocha.js'
 //import '../../node_modules/chai/chai.js' //marche pas
 
@@ -27,7 +26,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
 
 
     const player: MutableRefObject<HTMLAudioElement | null> = useRef(null);
-    const [playerState, setPlayerState] = useState(
+    const [playerState] = useState(
         {
             playing: false,
             url: `${url_plugin}CleanGuitarRiff.mp3`
@@ -59,7 +58,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         mocha.setup('bdd');
 
         var expect = chai.expect;
-        var assert = chai.assert;
+        //var assert = chai.assert;
         const plugin = param;
 
         describe('Gui', function () {
@@ -159,32 +158,26 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
     }, [loadedMain, loadedMocha, loadedChai]);
 
 
-    const onPlay = () => {
-    };
-
-    const onPause = () => {
-
-    };
-
     return !(loadedMain && loadedMocha && loadedChai) ? <Icon type="loading" /> :
-        <Row type="flex" justify="center">
-            <Col span={6}>
-                <Input value={playerState.url}/>
-                <Button
-                    size="large"
-                    type="primary"
-                    shape="circle"
-                    icon={playerState.playing ? "pause-circle" : "play-circle"}/>
-                <audio ref={player} src={playerState.url} id="sample" controls loop crossOrigin="anonymous"/>
+        <Row type="flex" justify="space-around">
+            <Col span={7}>
+                <Card type="inner" title="Music">
+                    <Input value={playerState.url}/>
+                    <audio ref={player} src={playerState.url} id="sample" controls loop crossOrigin="anonymous"/>
+                </Card>
             </Col>
-            <Col span={6}>
-                <div ref={pluginElement}/>
+            <Col span={7}>
+                <Card type="inner" title="Plugin">
+                    <div style={{display: 'flex', justifyContent: 'space-around'}} ref={pluginElement}/>
+                    <br/><br/>
+                </Card>
             </Col>
-            <Col span={6}>
-                <div id="mocha"/>
+            <Col span={7}>
+                <Card type="inner" title="Tests">
+                    <div id="mocha"/>
+                </Card>
             </Col>
         </Row>;
-}
-
+};
 
 export default TryPlugin;
