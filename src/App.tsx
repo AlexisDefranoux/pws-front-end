@@ -6,6 +6,7 @@ import FooterPage from "./components/shared/FooterPage";
 import {Layout} from "antd";
 import TryPlugin from "./components/TryPlugin";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import PrivateRoute from './components/auth/private_route';
 import Shop from "./components/Shop";
 import AddPluginForm from "./components/AddPluginForm";
 import Detail from "./components/Detail";
@@ -26,7 +27,7 @@ const App: React.FC = () => {
                 <div id="containerDiv" style={{padding: "78px 30px 30px 30px"}}>
                     <Switch>
                         <Route path="/shop" component={Shop}/>
-                        <Route path="/addplugin" component={AddPluginForm}/>
+                        <PrivateRoute path="/addplugin"><AddPluginForm/></PrivateRoute>
                         <Route path="/detail/:id" component={Detail}/>
                         <Route exact path="/login" component={Login}/>
                         <Route path="/register" component={Register}/>

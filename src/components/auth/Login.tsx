@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {Button, Card, Checkbox, Form, Icon, Input} from "antd";
 import { FormComponentProps } from 'antd/es/form';
-import {Link} from "react-router-dom";
+import {Link, Redirect} from "react-router-dom";
+import Parse from 'parse';
 
 interface LoginFormProps extends FormComponentProps {}
 
@@ -9,14 +10,21 @@ class Login extends Component<LoginFormProps, any>  {
 
     handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        this.props.form.validateFields((err: any, values: any) => {
+        this.props.form.validateFields(async (err: any, values: any) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                try {
+                    const user = await Parse.User.logIn(values.username, values.password);
+                    this.setState({});
+                } catch(err) {
+                    console.error(err);
+                }
             }
         });
     };
 
     render() {
+        if(Parse.User.current()) return <Redirect to='/'/>
         const { getFieldDecorator } = this.props.form;
         return (
             <Card title="Login" style={{maxWidth: "600px", margin: "auto"}}>

@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Button, Card, Form, Icon, Input, Tooltip} from "antd";
 import {FormComponentProps} from 'antd/es/form';
 import Parse from 'parse';
+import { Redirect } from 'react-router-dom';
 
 interface RegisterFormProps extends FormComponentProps {}
 
@@ -29,7 +30,8 @@ const tailFormItemLayout = {
 };
 
 type MyState = {
-    confirmDirty: boolean
+    confirmDirty: boolean,
+    redirect?: string
 };
 
 class Register extends Component<RegisterFormProps, MyState> {
@@ -37,7 +39,8 @@ class Register extends Component<RegisterFormProps, MyState> {
     constructor(props: any) {
         super(props);
         this.state = {
-            confirmDirty: false
+            confirmDirty: false,
+            redirect: undefined
         };
     }
 
@@ -52,7 +55,9 @@ class Register extends Component<RegisterFormProps, MyState> {
                 user.set("email", this.props.form.getFieldValue('email'));
                 try {
                     await user.signUp();
-                    console.log('register successful');
+                    this.setState(state => {
+                        return {redirect: '/shop', confirmDirty: state.confirmDirty};
+                    });
                 } catch(err) {
                     console.error(err);
                 }
@@ -83,6 +88,8 @@ class Register extends Component<RegisterFormProps, MyState> {
     };
 
     render() {
+        if(this.state.redirect) return <Redirect to={this.state.redirect}/>;
+
         const {getFieldDecorator} = this.props.form;
         return (
             <Card title="Register" style={{maxWidth: "600px", margin: "auto"}}>

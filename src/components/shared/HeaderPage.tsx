@@ -3,6 +3,7 @@ import {Badge, Icon, Menu} from "antd";
 import './HeaderPage.css'
 
 import { Link } from 'react-router-dom';
+import Parse from 'parse';
 
 type MyProps = {};
 type MyState = { current: string };
@@ -26,9 +27,11 @@ class HeaderPage extends Component<MyProps, MyState> {
                     <Menu.Item key="2">
                         <Link to="/addplugin"><Icon type="file-add"/>Add a plugin</Link>
                     </Menu.Item>
+                    {!Parse.User.current() && 
                     <Menu.Item style={{float: "right"}} key="4">
                         <Link to="/login"><Icon type="user"/>Login</Link>
                     </Menu.Item>
+                    }
                     <Menu.Item style={{float: "right"}} key="3" disabled>
                         <Badge count={5}><Icon type="shopping-cart"/></Badge>
                     </Menu.Item>
