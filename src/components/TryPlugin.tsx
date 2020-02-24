@@ -54,7 +54,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         mocha.setup('bdd');
 
         const expect = chai.expect;
-        
+
         describe('Gui', function () {
             it('plugin should have a JSON loadGui() method', function () {
                 return expect(plugin.loadGui).to.exist;

@@ -22,7 +22,7 @@ class Login extends Component<LoginFormProps, any>  {
                 } catch(err) {
                     notification.open({
                         type: "error",
-                        message: 'Failed to log in you',
+                        message: 'Failed to log you in',
                     });
                     console.error(err);
                 }

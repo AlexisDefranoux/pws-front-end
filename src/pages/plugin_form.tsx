@@ -5,14 +5,14 @@ import Parse from 'parse';
 import { Redirect } from 'react-router-dom';
 import TagForm from '../components/TagForm';
 import { RcFile } from 'antd/lib/upload';
-import { 
-    Form, 
-    Input, 
+import {
+    Form,
+    Input,
     InputNumber,
     Checkbox,
     SubmitButton
 } from 'formik-antd';
-import { 
+import {
     Card,
     Row,
     Col,
@@ -85,7 +85,7 @@ const PluginForm: React.FC<Props> = (props) => {
     };
 
     const [categories, setCategories]: [Parse.Object[], any] = useState([]);
-    
+
 
     async function fetchCategories() {
         const Category = Parse.Object.extend('Category');
@@ -147,11 +147,11 @@ const PluginForm: React.FC<Props> = (props) => {
         return isZip && isLt50M;
     }
 
-    if(!Parse.User.current()) return <Redirect to='/'/>
+    if(!Parse.User.current()) return <Redirect to='/'/>;
 
     return (
         <Card title='Add a new plugin'>
-            <Formik 
+            <Formik
                 initialValues={initialValues}
                 validationSchema={schema}
                 onSubmit={handleSubmit}
@@ -213,7 +213,7 @@ const PluginForm: React.FC<Props> = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            <Col sm={3} xs={24}>
+                            <Col>
                                 <Form.Item name="image">
                                     <Upload
                                         listType="picture-card"
@@ -221,11 +221,11 @@ const PluginForm: React.FC<Props> = (props) => {
                                         showUploadList={false}
                                         beforeUpload={checkImageUpload}
                                         customRequest={dummyRequest}
-                                        onChange={(info: any) => 
+                                        onChange={(info: any) =>
                                         setFieldValue('image', new Parse.File('image', info.file.originFileObj))}
                                         >
-                                            {values.image? 
-                                                <img src="https://www.freeiconspng.com/uploads/multimedia-photo-icon-31.png" alt="avatar" style={{ width: '100%' }} /> : 
+                                            {values.image?
+                                                <img src="https://www.freeiconspng.com/uploads/multimedia-photo-icon-31.png" alt="avatar" style={{ width: '100%' }} /> :
                                                 <div>
                                                     <Icon type='plus'/>
                                                     <div className="ant-upload-text">Drop image</div>
@@ -235,7 +235,7 @@ const PluginForm: React.FC<Props> = (props) => {
                                 </Form.Item>
                             </Col>
 
-                            <Col sm={20} xs={24}>
+                            <Col>
                                 <Form.Item name="zip_plugin">
                                     <Upload
                                         listType="picture-card"
@@ -243,11 +243,11 @@ const PluginForm: React.FC<Props> = (props) => {
                                         showUploadList={false}
                                         beforeUpload={checkZipUpload}
                                         customRequest={dummyRequest}
-                                        onChange={(info: any) => 
+                                        onChange={(info: any) =>
                                             setFieldValue('zip_plugin', new Parse.File('plugin', info.file.originFileObj))}
                                         >
-                                            {values.zip_plugin? 
-                                                <img src="https://image.flaticon.com/icons/png/512/1465/1465628.png" alt="avatar" style={{ width: '100%' }} />  : 
+                                            {values.zip_plugin?
+                                                <img src="https://image.flaticon.com/icons/png/512/1465/1465628.png" alt="avatar" style={{ width: '100%' }} />  :
                                                 <div>
                                                     <Icon type='plus'/>
                                                     <div className="ant-upload-text">Drop plugin</div>
@@ -259,7 +259,7 @@ const PluginForm: React.FC<Props> = (props) => {
 
                             <Col span={24}>
                                 <Form.Item name="url">
-                                    <Input name="url" placeholder="Url plugin"/>
+                                    <Input name="url" placeholder="Youtube video ID"/>
                                 </Form.Item>
                             </Col>
                         </Row>

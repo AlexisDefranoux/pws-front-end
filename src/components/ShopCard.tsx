@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Card, Button, Tag, Row, Col} from "antd";
+import {Card, Tag, Row, Col} from "antd";
 import {Link} from "react-router-dom";
 
 type MyProps = { plugin: any };
@@ -13,17 +13,15 @@ class ShopCard extends Component<MyProps> {
                     <img style={{width: '100%', height: 'auto'}} id="zoomImg" src={this.props.plugin?.attributes.image._url} alt={this.props.plugin?.attributes.image._name} />
                     </div>}>
                     <Row type='flex' justify='space-between'>
-                        <Col span={6}>
+                        <Col>
                             <h3>{this.props.plugin?.attributes.name}</h3>
                         </Col>
-                        <Col span={6}>
-                            <Button style={{float: 'right'}} type={"primary"} icon={"shopping-cart"} />
-                        </Col>
+                        <p style={{marginBottom: 0}}>{this.props.plugin?.attributes.price === 0 ?
+                            <Tag color="green">Free</Tag> :
+                            <Tag color="volcano">{this.props.plugin?.attributes.price + '€'}</Tag>}
+                        </p>
                     </Row>
-                    <p style={{marginBottom: 0}}>{this.props.plugin?.attributes.price === 0 ?
-                        <Tag color="green">Free</Tag> :
-                        <Tag color="volcano">{this.props.plugin?.attributes.price + '€'}</Tag>}
-                    </p>
+
                 </Card>
             </Link>
         )

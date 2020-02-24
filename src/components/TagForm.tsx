@@ -18,7 +18,6 @@ class TagForm extends Component<MyProps, MyState> {
 
     handleClose = (removedTag: any) => {
         const tags = this.state.tags.filter(tag => tag !== removedTag);
-        console.log(tags);
         this.setState({ tags });
         this.props.returnTags(tags);
     };
@@ -37,7 +36,6 @@ class TagForm extends Component<MyProps, MyState> {
         if (inputValue && tags.indexOf(inputValue) === -1) {
             tags = [...tags, inputValue];
         }
-        console.log(tags);
         this.setState({
             tags,
             inputVisible: false,

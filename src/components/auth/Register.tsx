@@ -48,7 +48,6 @@ class Register extends Component<RegisterFormProps, MyState> {
         e.preventDefault();
         this.props.form.validateFields( async (err: any, values: any) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 const user = new Parse.User();
                 user.set("username", this.props.form.getFieldValue('nickname'));
                 user.set("password", this.props.form.getFieldValue('password'));

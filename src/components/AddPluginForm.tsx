@@ -37,7 +37,6 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
         e.preventDefault();
         this.props.form.validateFields(async (err: any, values: any) => {
             if (!err) {
-                console.log('Received values of form: ', values);
                 const Category = Parse.Object.extend("Category");
                 const query = new Parse.Query(Category);
                 query.equalTo("name", values.category);
@@ -82,12 +81,6 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
         });
     };
 
-    handleSelectChange = (value: string) => {
-        console.log(value);
-        // this.props.form.setFieldsValue({
-        //     note: `Hi, ${value === 'male' ? 'man' : 'lady'}!`,
-        // });
-    };
 
     setImageValidate = (canValidateImage : any) => {
         this.setState({imageUrl: canValidateImage});
@@ -169,7 +162,6 @@ class AddPlugin extends Component<AddPluginFormProps, MyState> {
                         })(
                             <Select
                                 placeholder="Select a option and change input text above"
-                                onChange={this.handleSelectChange}
                             >
                                 {this.state.categories.map(el =>
                                     <Option key={el} value={el}>{el}</Option>
