@@ -3,7 +3,11 @@ import {Icon, Row, Col, Input, Card} from 'antd';
 import useScript from '../hooks/useScript';
 import axios from 'axios';
 //import '../../node_modules/mocha/mocha.js'
-//import '../../node_modules/chai/chai.js' //marche pas
+//import '../../node_modules/chai/chai.js' //marche pas --> tu es sûr ? Est ce pas plutot de la flemardisme ?
+import 'mocha/mocha';
+import chai from 'chai';
+
+declare var mocha: any;
 
 const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) => {
 
@@ -13,18 +17,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         `${url_plugin}main.js`
     );
 
-
-    const [loadedMocha] = useScript(
-        `/testjs/mocha.js`
-    );
-
-    const [loadedChai] = useScript(
-        `/testjs/chai.js`
-    );
-
     const pluginElement: MutableRefObject<HTMLDivElement | null> = useRef(null);
-
-
     const player: MutableRefObject<HTMLAudioElement | null> = useRef(null);
     const [playerState] = useState(
         {
@@ -55,12 +48,13 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
     };
 
     const testPlugin = (param:any) => {
-        mocha.setup('bdd');
 
-        var expect = chai.expect;
-        //var assert = chai.assert;
         const plugin = param;
 
+        mocha.setup('bdd');
+
+        const expect = chai.expect;
+        
         describe('Gui', function () {
             it('plugin should have a JSON loadGui() method', function () {
                 return expect(plugin.loadGui).to.exist;
@@ -145,7 +139,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
     };
 
     useEffect(() => {
-        if( !(loadedMain && loadedMocha && loadedChai)) return;
+        if( !loadedMain) return;
 
         axios({
             method: 'GET',
@@ -155,10 +149,10 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
             loadPlugin(response.data);
         });
 
-    }, [loadedMain, loadedMocha, loadedChai]);
+    }, [loadedMain]);
 
 
-    return !(loadedMain && loadedMocha && loadedChai) ? <Icon type="loading" /> :
+    return !loadedMain ? <Icon type="loading" /> :
         <Row type="flex" justify="space-around">
             <Col span={7}>
                 <Card type="inner" title="Music">
