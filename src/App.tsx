@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import HeaderPage from "./components/shared/HeaderPage";
 import FooterPage from "./components/shared/FooterPage";
@@ -21,22 +21,25 @@ Parse.initialize('parse-server-webplugin');
 Parse.serverURL = `${process.env.REACT_APP_API_PARSE}`;
 
 const App: React.FC = () => {
+
+    let [page, setPage] = useState('1');
+
     return (
         <Router>
             <Layout>
-                <HeaderPage/>
+                <HeaderPage key={page}/>
                 <div style={{padding: "78px 30px 30px 30px"}}>
                     <Switch>
-                        <Route path="/shop" component={Shop}/>
-                        <PrivateRoute path="/addplugin"><PluginForm/></PrivateRoute>
-                        <Route path="/myplugins" component={MyPlugins}/>
-                        <Route path="/detail/:id" component={Detail}/>
-                        <Route path="/publicofficialstore/:id" component={PublishOfficialStore}/>
-                        <Route exact path="/login" component={Login}/>
-                        <Route path="/register" component={Register}/>
-                        <Route path="/tryplugin/:id" component={TryPlugin}/>
-                        <Route path="/:undefined"><p>Page 404</p></Route>
-                        <Route path="/" component={Shop}/>
+                        <Route onEnter={() => setPage('1')} path="/shop" component={Shop}/>
+                        <PrivateRoute  onEnter={() => setPage('3')} path="/addplugin"><PluginForm/></PrivateRoute>
+                        <Route  onEnter={() => setPage('2')} path="/myplugins" component={MyPlugins}/>
+                        <Route  path="/detail/:id" component={Detail}/>
+                        <Route  path="/publicofficialstore/:id" component={PublishOfficialStore}/>
+                        <Route  onEnter={() => setPage('4')} exact path="/login" component={Login}/>
+                        <Route  path="/register" component={Register}/>
+                        <Route  path="/tryplugin/:id" component={TryPlugin}/>
+                        <Route  path="/:undefined"><p>Page 404</p></Route>
+                        <Route  path="/" component={Shop}/>
                     </Switch>
                 </div>
                 <FooterPage/>
