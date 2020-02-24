@@ -57,7 +57,7 @@ class Register extends Component<RegisterFormProps, MyState> {
                     await user.signUp();
                     notification.open({
                         type: "success",
-                        message: 'Welcome' + values.username,
+                        message: 'Welcome ' + values.username,
                     });
                     this.setState(state => {
                         return {redirect: '/shop', confirmDirty: state.confirmDirty};
