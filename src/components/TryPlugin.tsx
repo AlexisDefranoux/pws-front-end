@@ -135,7 +135,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         });
 
         const run = mocha.run();
-        props.testResults(run.total, run.failures);
+        props.testResults(run);
     };
 
     useEffect(() => {

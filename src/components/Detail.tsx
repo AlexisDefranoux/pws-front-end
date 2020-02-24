@@ -67,6 +67,10 @@ class Detail extends Component<MyProps, MyState> {
         }
     };
 
+    download () {
+        window.open(this.state.plugin.attributes.zip_plugin.url(), "_self")
+    }
+
     render() {
         return (
             <Row className="Detail" >
@@ -125,7 +129,7 @@ class Detail extends Component<MyProps, MyState> {
                                 </Descriptions.Item>
 
                             </Descriptions>
-                            <Button type={"primary"} icon={"download"}>Download</Button>
+                            <Button type={"primary"} icon={"download"} onClick={this.download.bind(this)}>Download</Button>
                         </Col>
                     </Row>
 
