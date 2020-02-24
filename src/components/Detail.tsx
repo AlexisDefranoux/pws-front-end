@@ -117,7 +117,7 @@ class Detail extends Component<MyProps, MyState> {
                                 <Descriptions.Item label={"Price"}>
                                     {this.state?.plugin?.attributes.price === 0 ?
                                         <Tag color="green">Free</Tag> :
-                                        <Tag color="volcano">{this.state?.plugin?.price + '€'}</Tag>}
+                                        <Tag color="volcano">{this.state?.plugin?.attributes.price + '€'}</Tag>}
                                 </Descriptions.Item>
 
                                 <Descriptions.Item label={"Category"}>
