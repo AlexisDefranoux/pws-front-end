@@ -44,24 +44,11 @@ const PluginUse: React.FC<{pluginID: string}> = (props) => {
 
     }, [loadPlugin, loaded, url_plugin]);
 
-
-    // const onPlay = () => {
-    // };
-    //
-    // const onPause = () => {
-    //
-    // };
-
     return !loaded ? <Icon type="loading" /> :
     <Row type="flex" justify="space-around">
         <Col span={11}>
             <Card type="inner" title="Music">
                 <Input value={playerState.url}/>
-                {/*<Button*/}
-                {/*    size="large"*/}
-                {/*    type="primary"*/}
-                {/*    shape="circle"*/}
-                {/*    icon={playerState.playing ? "pause-circle" : "play-circle"}/><br/>*/}
                 <audio ref={player} src={playerState.url} id="sample" controls loop crossOrigin="anonymous"/>
             </Card>
         </Col>

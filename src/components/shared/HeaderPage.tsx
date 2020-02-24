@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Icon, Menu} from "antd";
+import {Icon, Menu, notification} from "antd";
 import './HeaderPage.css'
 
 import { Link } from 'react-router-dom';
@@ -12,9 +12,20 @@ const HeaderPage: React.FC = (props) => {
     let [current, setCurrent]: [string | undefined, any] = useState(undefined);
 
     async function handleLogout() {
-        await Parse.User.logOut();
-        setCurrent('4');
-        history.push('/login');
+        try {
+            await Parse.User.logOut();
+            setCurrent('1');
+            history.push('/shop');
+            notification.open({
+                type: "success",
+                message: 'Log out succeed ',
+            });
+        } catch(err) {
+            notification.open({
+                type: "error",
+                message: 'Failed to log out you',
+            });
+        }
     }
 
     return (
