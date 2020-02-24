@@ -7,7 +7,7 @@ import TryPlugin from "./components/TryPlugin";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import PrivateRoute from './components/auth/private_route';
 import Shop from "./components/Shop";
-import AddPluginForm from "./components/AddPluginForm";
+import PluginForm from "./pages/plugin_form";
 import Detail from "./components/Detail";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
@@ -28,7 +28,7 @@ const App: React.FC = () => {
                 <div style={{padding: "78px 30px 30px 30px"}}>
                     <Switch>
                         <Route path="/shop" component={Shop}/>
-                        <PrivateRoute path="/addplugin"><AddPluginForm/></PrivateRoute>
+                        <PrivateRoute path="/addplugin"><PluginForm/></PrivateRoute>
                         <Route path="/myplugins" component={MyPlugins}/>
                         <Route path="/detail/:id" component={Detail}/>
                         <Route path="/publicofficialstore/:id" component={PublishOfficialStore}/>
