@@ -19,7 +19,7 @@ import {
     Upload,
     Icon,
     Select,
-    message
+    message, notification
  } from 'antd';
 
 const { Option } = Select;
@@ -53,8 +53,7 @@ const { Option } = Select;
     official: Yup.boolean()
         .required('Required'),
     tags: Yup.array()
-        .of(Yup.string())
-        .required('Required'),
+        .of(Yup.string()),
     url: Yup.string(),
     user: Yup.object()
  });
@@ -102,11 +101,24 @@ const PluginForm: React.FC<Props> = (props) => {
     async function handleSubmit(values: any, options: any) {
         const plugin = new (Parse.Object.extend('Plugin'))({...values});
         try {
+            notification.open({
+                type: "info",
+                message: 'pushing in progress',
+            });
             await plugin.save();
             options.setSubmitting(true);
+            notification.open({
+                type: "success",
+                message: 'Your plugin has been posted',
+            });
+            //TODO should redirect to '/detail/'+ plugin.id;
         } catch(err) {
             console.error(err);
             options.setSubmitting(false);
+            notification.open({
+                type: "error",
+                message: 'Failed to post your plugin',
+            });
         }
     }
 
@@ -124,7 +136,7 @@ const PluginForm: React.FC<Props> = (props) => {
     }
 
     function checkZipUpload(file: RcFile, fileList: RcFile[]): boolean {
-        const isZip = file.type === 'application/zip';
+        const isZip = (file.type === 'application/zip' || file.type === 'application/x-zip-compressed');
         if (!isZip) {
             message.error('You can only upload Zip file!');
         }
