@@ -6,12 +6,11 @@ import TryPlugin from "./TryPlugin";
 import {Redirect} from "react-router-dom";
 
 type MyProps = { match: any };
-type MyState = { plugin: any, testPassed: boolean, redirect?: string };
+type MyState = { plugin: any, run: Mocha.Runner, redirect?: string };
 
 class PublishOfficialStore extends Component<MyProps, MyState> {
 
     componentDidMount(): void {
-        this.setState({testPassed: false});
 
         let query = new Parse.Query(Parse.Object.extend("Plugin"));
         query.get(this.props.match.params.id).then((plugin) => {
@@ -21,12 +20,12 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
         });
     }
 
-    getPluginTestResults(total: number, failure: number) : void {
-        this.setState({testPassed: (failure === 0 && total > 0)});
+    getPluginTestResults(run: Mocha.Runner) : void {
+        this.setState({run: run});
     }
 
     async handleClick() {
-        if (!this.state.testPassed) {
+        if (this.state.run?.failures != 0) {
             notification.open({
                 type: "error",
                 message: 'Some tests failed',
