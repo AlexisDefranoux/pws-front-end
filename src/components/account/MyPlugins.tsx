@@ -1,8 +1,9 @@
 import {Card, Col, Row} from 'antd';
 import React, {Component} from 'react';
 import Parse from 'parse';
-import MyPluginsList from "./MyPluginsList";
 import {Redirect} from "react-router-dom";
+
+import MyPluginsList from "./MyPluginsList";
 
 type MyProps = {};
 type MyState = { ids_official: any[], ids_non_official: any[] };

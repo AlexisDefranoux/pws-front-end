@@ -1,7 +1,8 @@
 import {Col, Row, Switch} from 'antd';
 import React, {Component} from 'react';
-import ShopCard from "./ShopCard";
 import Parse from 'parse';
+
+import ShopCard from "./ShopCard";
 
 type MyProps = {};
 type MyState = { plugins: any[], onlyOfficial: boolean };

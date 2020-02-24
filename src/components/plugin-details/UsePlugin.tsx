@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState, MutableRefObject } from 'react';
 import {Icon, Row, Col, Input, Card} from 'antd';
-import useScript from '../../hooks/useScript';
 import axios from 'axios';
 
-const PluginUse: React.FC<{pluginID: string}> = (props) => {
+import useScript from '../../hooks/useScript';
+
+const PluginUse: React.FC<{pluginID: string}> =(props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
     const [loaded] = useScript(`${url_plugin}main.js`);

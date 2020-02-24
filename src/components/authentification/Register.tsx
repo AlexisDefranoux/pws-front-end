@@ -46,7 +46,7 @@ class Register extends Component<RegisterFormProps, MyState> {
 
     handleSubmit = async(e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        this.props.form.validateFields( async (err: any, values: any) => {
+        this.props.form.validateFields( async (err: any) => {
             if (!err) {
                 const user = new Parse.User();
                 user.set("username", this.props.form.getFieldValue('nickname'));

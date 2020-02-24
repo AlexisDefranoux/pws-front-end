@@ -1,15 +1,16 @@
 import React, { useEffect, useRef, useState, MutableRefObject } from 'react';
 import {Icon, Row, Col, Input, Card} from 'antd';
-import useScript from '../hooks/useScript';
 import axios from 'axios';
-//import '../../node_modules/mocha/mocha.js'
-//import '../../node_modules/chai/chai.js' //marche pas --> tu es sûr ? Est ce pas plutot de la flemardisme ?
 import 'mocha/mocha';
 import chai from 'chai';
+//import '../../node_modules/mocha/mocha.js'
+//import '../../node_modules/chai/chai.js' //marche pas --> tu es sûr ? Est ce pas plutot de la flemardisme ?
+
+import useScript from '../../hooks/useScript';
 
 declare var mocha: any;
 
-const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) => {
+const TestAndUsePlugin: React.FC<{pluginID: string, testResults: Function}> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
 
@@ -174,4 +175,4 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         </Row>;
 };
 
-export default TryPlugin;
+export default TestAndUsePlugin;

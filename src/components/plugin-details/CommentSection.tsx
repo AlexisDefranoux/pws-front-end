@@ -1,8 +1,7 @@
-import {Button, Comment, Icon, List, notification} from 'antd';
+import {Button, Comment, Icon, List, notification, Form} from 'antd';
 import React, {Component} from "react";
-import Form from 'antd/es/form';
-import TextArea from 'antd/lib/input/TextArea';
 import Parse from "parse";
+import TextArea from 'antd/lib/input/TextArea';
 
 type MyProps = {
     plugin: any;

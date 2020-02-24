@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
-
 import {Button, Card, notification, Row} from "antd";
 import Parse from "parse";
-import TryPlugin from "./TryPlugin";
 import {Redirect} from "react-router-dom";
+
+import TestAndUsePlugin from "./TestAndUsePlugin";
 
 type MyProps = { match: any };
 type MyState = { plugin: any, run: Mocha.Runner, redirect?: string };
@@ -25,7 +25,7 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
     }
 
     async handleClick() {
-        if (this.state.run?.failures != 0) {
+        if (this.state.run?.failures !== 0) {
             notification.open({
                 type: "error",
                 message: 'Some tests failed',
@@ -55,7 +55,7 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
                         <Button icon="check" type={"primary"} onClick={this.handleClick.bind(this)}>Publish to the official store</Button>
                     </Row>
                     {this.state?.plugin?
-                        <TryPlugin pluginID={this.state.plugin.objectId} testResults={this.getPluginTestResults.bind(this)}/> :
+                        <TestAndUsePlugin pluginID={this.state.plugin.objectId} testResults={this.getPluginTestResults.bind(this)}/> :
                         <p>Loading...</p>
                     }
                 </Card>

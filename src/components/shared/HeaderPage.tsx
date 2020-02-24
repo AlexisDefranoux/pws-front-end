@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import {Icon, Menu, notification} from "antd";
-import './HeaderPage.css'
-
 import { Link } from 'react-router-dom';
 import {useHistory} from 'react-router-dom';
 import Parse from 'parse';
 
-const HeaderPage: React.FC = (props) => {
+import './HeaderPage.css'
+
+const HeaderPage: React.FC = () => {
 
     let history = useHistory();
     let [current, setCurrent]: [string | undefined, any] = useState(undefined);
