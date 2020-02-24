@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import {Icon, Menu, notification} from "antd";
-import { Link } from 'react-router-dom';
-import {useHistory} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import Parse from 'parse';
 
 import './HeaderPage.css'
@@ -20,7 +19,7 @@ const HeaderPage: React.FC = () => {
                 type: "success",
                 message: 'Log out succeed ',
             });
-        } catch(err) {
+        } catch (err) {
             notification.open({
                 type: "error",
                 message: 'Failed to log out you',

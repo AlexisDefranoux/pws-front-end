@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Button, Card, Form, Icon, Input, notification, Tooltip} from "antd";
 import {FormComponentProps} from 'antd/es/form';
 import Parse from 'parse';
-import { Redirect } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 
 interface RegisterFormProps extends FormComponentProps {}
 
@@ -44,9 +44,9 @@ class Register extends Component<RegisterFormProps, MyState> {
         };
     }
 
-    handleSubmit = async(e: { preventDefault: () => void; }) => {
+    handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
-        this.props.form.validateFields( async (err: any) => {
+        this.props.form.validateFields(async (err: any) => {
             if (!err) {
                 const user = new Parse.User();
                 user.set("username", this.props.form.getFieldValue('nickname'));
@@ -61,7 +61,7 @@ class Register extends Component<RegisterFormProps, MyState> {
                     this.setState(state => {
                         return {redirect: '/shop', confirmDirty: state.confirmDirty};
                     });
-                } catch(err) {
+                } catch (err) {
                     notification.open({
                         type: "error",
                         message: 'Failed to register you',
@@ -73,12 +73,12 @@ class Register extends Component<RegisterFormProps, MyState> {
     };
 
     handleConfirmBlur = (e: any) => {
-        const { value } = e.target;
-        this.setState({ confirmDirty: this.state.confirmDirty || !!value });
+        const {value} = e.target;
+        this.setState({confirmDirty: this.state.confirmDirty || !!value});
     };
 
     compareToFirstPassword = (rule: any, value: any, callback: any) => {
-        const { form } = this.props;
+        const {form} = this.props;
         if (value && value !== form.getFieldValue('password')) {
             callback('Two passwords that you enter is inconsistent!');
         } else {
@@ -87,16 +87,16 @@ class Register extends Component<RegisterFormProps, MyState> {
     };
 
     validateToNextPassword = (rule: any, value: any, callback: any) => {
-        const { form } = this.props;
+        const {form} = this.props;
         if (value && this.state.confirmDirty) {
-            form.validateFields(['confirm'], { force: true });
+            form.validateFields(['confirm'], {force: true});
         }
         callback();
     };
 
     render() {
-        if(this.state.redirect) return <Redirect to={this.state.redirect}/>;
-        if(Parse.User.current()) return <Redirect to='/'/>;
+        if (this.state.redirect) return <Redirect to={this.state.redirect}/>;
+        if (Parse.User.current()) return <Redirect to='/'/>;
         const {getFieldDecorator} = this.props.form;
         return (
             <Card title="Register" style={{maxWidth: "600px", margin: "auto"}}>

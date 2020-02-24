@@ -14,13 +14,13 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
 
         let query = new Parse.Query(Parse.Object.extend("Plugin"));
         query.get(this.props.match.params.id).then((plugin) => {
-            this.setState({ plugin: plugin.toJSON() });
+            this.setState({plugin: plugin.toJSON()});
         }, (error) => {
             console.error("Get plugin by id : " + error)
         });
     }
 
-    getPluginTestResults(run: Mocha.Runner) : void {
+    getPluginTestResults(run: Mocha.Runner): void {
         this.setState({run: run});
     }
 
@@ -46,16 +46,18 @@ class PublishOfficialStore extends Component<MyProps, MyState> {
     }
 
     render() {
-        if(!Parse.User.current()) return <Redirect to='/login'/>;
-        if(this.state?.redirect) return <Redirect to={this.state.redirect}/>;
+        if (!Parse.User.current()) return <Redirect to='/login'/>;
+        if (this.state?.redirect) return <Redirect to={this.state.redirect}/>;
         return (
-            <div className="PublishOfficialStore" >
+            <div className="PublishOfficialStore">
                 <Card title={'Request to the official store'}>
                     <Row type={'flex'} justify={"center"} style={{marginBottom: '15px'}}>
-                        <Button icon="check" type={"primary"} onClick={this.handleClick.bind(this)}>Publish to the official store</Button>
+                        <Button icon="check" type={"primary"} onClick={this.handleClick.bind(this)}>Publish to the
+                            official store</Button>
                     </Row>
-                    {this.state?.plugin?
-                        <TestAndUsePlugin pluginID={this.state.plugin.objectId} testResults={this.getPluginTestResults.bind(this)}/> :
+                    {this.state?.plugin ?
+                        <TestAndUsePlugin pluginID={this.state.plugin.objectId}
+                                          testResults={this.getPluginTestResults.bind(this)}/> :
                         <p>Loading...</p>
                     }
                 </Card>
