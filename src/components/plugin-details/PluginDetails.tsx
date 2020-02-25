@@ -6,6 +6,7 @@ import axios from "axios";
 import PluginUse from "./UsePlugin";
 import CommentSection from "./CommentSection";
 import {Simulate} from "react-dom/test-utils";
+import {Redirect} from "react-router-dom";
 
 const {TabPane} = Tabs;
 type MyProps = { match: any };
@@ -87,7 +88,7 @@ class PluginDetails extends Component<MyProps, MyState> {
                 type: "success",
                 message: 'The plugin has been forked',
             });
-            this.setState({redirect: "/detail/" + response.id})
+            this.setState({redirect: "/detail/" + response.data.newid});
         }).catch((error) => {
             notification.open({
                 type: "error",
@@ -102,6 +103,9 @@ class PluginDetails extends Component<MyProps, MyState> {
     }
 
     render() {
+        if (this.state?.redirect)
+            return <Redirect to="/myplugins"/>;
+
         return (
             <Row className="Detail">
                 <Card title={Plugin.name}>
