@@ -12,6 +12,7 @@ declare var mocha: any;
 const TestAndUsePlugin: React.FC<{ pluginID: string, testResults: Function }> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
+    const url_music = `${process.env.REACT_APP_MUSIC}`;
 
     const [loadedMain] = useScript(
         `${url_plugin}main.js`
@@ -22,7 +23,7 @@ const TestAndUsePlugin: React.FC<{ pluginID: string, testResults: Function }> = 
     const [playerState] = useState(
         {
             playing: false,
-            url: `${url_plugin}CleanGuitarRiff.mp3`
+            url: `${url_music}`
         });
 
     const loadPlugin = (info: any) => {
@@ -151,6 +152,11 @@ const TestAndUsePlugin: React.FC<{ pluginID: string, testResults: Function }> = 
             responseType: 'json'
         }).then((response) => {
             loadPlugin(response.data);
+        }).catch((err) => {
+            //Dû à l'initialisation des const dans les main.js des plugin
+            //nous somme obligés de rafraichir pour detruire ces const
+            console.log("Un plugin chargé précédemment a initialisé des const, rafraichissement obligatoire pour charger ce plugin");
+            window.location.reload(false);
         });
 
     }, [loadedMain]);

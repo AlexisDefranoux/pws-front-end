@@ -7,10 +7,11 @@ import useScript from '../../hooks/useScript';
 const PluginUse: React.FC<{ pluginID: string }> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
+    const url_music = `${process.env.REACT_APP_MUSIC}`;
     const [loaded, error] = useScript(`${url_plugin}main.js`);
     const pluginElement: MutableRefObject<HTMLDivElement | null> = useRef(null);
     const player: MutableRefObject<HTMLAudioElement | null> = useRef(null);
-    const [playerState] = useState({playing: false, url: `${url_plugin}CleanGuitarRiff.mp3`});
+    const [playerState] = useState({playing: false, url: `${url_music}`});
 
     const loadPlugin = (info: any) => {
         if (!player.current) return;
