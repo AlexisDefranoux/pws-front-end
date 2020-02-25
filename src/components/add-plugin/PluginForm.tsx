@@ -147,37 +147,38 @@ const PluginForm: React.FC<Props> = () => {
                     <Form>
                         <Row gutter={15} type="flex">
                             <Col span={9}>
-                                <Form.Item name="name" hasFeedback>
+                                <Form.Item name="name" label="Name" hasFeedback>
                                     <Input name="name" placeholder="Name"/>
                                 </Form.Item>
                             </Col>
 
                             <Col span={6}>
-                                <Form.Item name="version" hasFeedback>
+                                <Form.Item name="version" label="Version" hasFeedback>
                                     <Input name="version" placeholder="Version"/>
                                 </Form.Item>
                             </Col>
 
                             <Col span={9}>
+                                <br/><br/>
                                 <Form.Item name="open_source">
                                     <Checkbox name="open_source">Open Source</Checkbox>
                                 </Form.Item>
                             </Col>
 
                             <Col span={24}>
-                                <Form.Item name="short_description" hasFeedback>
+                                <Form.Item name="short_description" label="Short description" hasFeedback>
                                     <Input.TextArea name="short_description" placeholder="Short Description"/>
                                 </Form.Item>
                             </Col>
 
                             <Col span={24}>
-                                <Form.Item name="long_description" hasFeedback>
+                                <Form.Item name="long_description" label="Long description" hasFeedback>
                                     <Input.TextArea name="long_description" placeholder="Long Description"/>
                                 </Form.Item>
                             </Col>
 
                             <Col span={24}>
-                                <Form.Item name="price" label="Price €" hasFeedback>
+                                <Form.Item name="price" label="Price (€)" hasFeedback>
                                     <InputNumber name="price" placeholder="Price"/>
                                 </Form.Item>
                             </Col>
@@ -247,8 +248,8 @@ const PluginForm: React.FC<Props> = () => {
                             </Col>
 
                             <Col span={24}>
-                                <Form.Item name="url">
-                                    <Input name="url" placeholder="Youtube video ID"/>
+                                <Form.Item name="url" label="Youtube video URL">
+                                    <Input name="url" placeholder="Youtube video URL"/>
                                 </Form.Item>
                             </Col>
                         </Row>

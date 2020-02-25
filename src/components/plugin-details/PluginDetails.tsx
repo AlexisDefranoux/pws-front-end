@@ -17,6 +17,7 @@ const descRating = ['Terrible', 'Bad', 'Normal', 'Good', 'Wonderful'];
 class PluginDetails extends Component<MyProps, MyState> {
 
     async componentDidMount(): Promise<void> {
+
         let query = new Parse.Query(Parse.Object.extend("Plugin"));
         const plugin = await query.get(this.props.match.params.id);
         this.setState({plugin: plugin});
@@ -71,7 +72,6 @@ class PluginDetails extends Component<MyProps, MyState> {
     };
 
     handleForkPlugin = () => {
-        console.log(process.env.REACT_APP_FORK_URL);
         let idPlugin: string = this.props.match.params.id;
         let idUser: string | undefined = Parse.User.current()?.id;
 

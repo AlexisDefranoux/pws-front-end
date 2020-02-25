@@ -7,7 +7,7 @@ import useScript from '../../hooks/useScript';
 const PluginUse: React.FC<{ pluginID: string }> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
-    const [loaded] = useScript(`${url_plugin}main.js`);
+    const [loaded, error] = useScript(`${url_plugin}main.js`);
     const pluginElement: MutableRefObject<HTMLDivElement | null> = useRef(null);
     const player: MutableRefObject<HTMLAudioElement | null> = useRef(null);
     const [playerState] = useState({playing: false, url: `${url_plugin}CleanGuitarRiff.mp3`});
@@ -41,9 +41,14 @@ const PluginUse: React.FC<{ pluginID: string }> = (props) => {
             responseType: 'json'
         }).then((response) => {
             loadPlugin(response.data);
+        }).catch((err) => {
+            //Dû à l'initialisation des const dans les main.js des plugin
+            //nous somme obligés de rafraichir pour detruire ces const
+            console.log("Un plugin chargé précédemment a initialisé des const, rafraichissement obligatoire pour charger ce plugin");
+            window.location.reload(false);
         });
 
-    }, [loadPlugin, loaded, url_plugin]);
+    }, [loadPlugin, loaded, error, url_plugin]);
 
     return !loaded ? <Icon type="loading"/> :
         <Row type="flex" justify="space-around">
