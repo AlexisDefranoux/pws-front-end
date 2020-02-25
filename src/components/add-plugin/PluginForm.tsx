@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Parse from 'parse';
-import {Redirect} from 'react-router-dom';
+import {Redirect, useHistory} from 'react-router-dom';
 
 import {RcFile} from 'antd/lib/upload';
 import {Checkbox, Form, Input, InputNumber, SubmitButton} from 'formik-antd';
@@ -53,6 +53,8 @@ type Props = {};
 
 const PluginForm: React.FC<Props> = () => {
 
+    let history = useHistory();
+
     const initialValues = {
         name: '',
         version: '1.0.0',
@@ -88,7 +90,7 @@ const PluginForm: React.FC<Props> = () => {
         try {
             notification.open({
                 type: "info",
-                message: 'pushing in progress',
+                message: 'submitting...',
             });
             await plugin.save();
             options.setSubmitting(true);
@@ -96,7 +98,7 @@ const PluginForm: React.FC<Props> = () => {
                 type: "success",
                 message: 'Your plugin has been posted',
             });
-            //TODO should redirect to '/detail/'+ plugin.id;
+            history.push('/detail/'+ plugin.id);
         } catch (err) {
             console.error(err);
             options.setSubmitting(false);
@@ -199,7 +201,7 @@ const PluginForm: React.FC<Props> = () => {
                             </Col>
 
                             <Col>
-                                <Form.Item name="image">
+                                <Form.Item name="image" hasFeedback>
                                     <Upload
                                         listType="picture-card"
                                         className="avatar-uploader"
@@ -222,7 +224,7 @@ const PluginForm: React.FC<Props> = () => {
                             </Col>
 
                             <Col>
-                                <Form.Item name="zip_plugin">
+                                <Form.Item name="zip_plugin" hasFeedback>
                                     <Upload
                                         listType="picture-card"
                                         className="avatar-uploader"
