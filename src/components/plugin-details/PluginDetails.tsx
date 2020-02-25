@@ -5,10 +5,11 @@ import axios from "axios";
 
 import PluginUse from "./UsePlugin";
 import CommentSection from "./CommentSection";
+import {Simulate} from "react-dom/test-utils";
 
 const {TabPane} = Tabs;
 type MyProps = { match: any };
-type MyState = { plugin: any; category: any; likes: any[]; canRate: boolean; likeAverage: number };
+type MyState = { plugin: any; category: any; likes: any[]; canRate: boolean; likeAverage: number; redirect: string | undefined };
 
 const descRating = ['Terrible', 'Bad', 'Normal', 'Good', 'Wonderful'];
 
@@ -81,8 +82,18 @@ class PluginDetails extends Component<MyProps, MyState> {
                 idPlugin: idPlugin,
                 idUser: idUser
             }
-        }).then((response) => {
-            console.log(response);
+        }).then((response: any) => {
+            notification.open({
+                type: "success",
+                message: 'The plugin has been forked',
+            });
+            this.setState({redirect: "/detail/" + response.id})
+        }).catch((error) => {
+            notification.open({
+                type: "error",
+                message: 'Failed to fork this plugin',
+            });
+            console.log(error);
         });
     };
 
@@ -153,8 +164,9 @@ class PluginDetails extends Component<MyProps, MyState> {
                             </Descriptions>
                             <Button type={"primary"} icon={"download"}
                                     onClick={this.download.bind(this)}>Download</Button>
+                            {this.state?.plugin?.attributes.open_source &&
                             <Button type={"primary"} icon={"fork"} onClick={this.handleForkPlugin.bind(this)}
-                                    style={{marginLeft: "10px"}}>Fork</Button>
+                                    style={{marginLeft: "10px"}}>Fork</Button>}
                             </Col>
                     </Row>
 
