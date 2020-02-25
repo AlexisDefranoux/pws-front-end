@@ -32,6 +32,7 @@ const schema = Yup.object().shape({
     zip_plugin: Yup.object()
         .required('Required'),
     price: Yup.number()
+        .min(0, 'Be positive')
         .required('Required'),
     category: Yup.object()
         .required('Required'),
@@ -179,7 +180,7 @@ const PluginForm: React.FC<Props> = () => {
 
                             <Col span={24}>
                                 <Form.Item name="price" label="Price (€)" hasFeedback>
-                                    <InputNumber name="price" placeholder="Price"/>
+                                    <InputNumber name="price" placeholder="Price" min={0}/>
                                 </Form.Item>
                             </Col>
 
