@@ -90,7 +90,7 @@ const PluginForm: React.FC<Props> = () => {
         try {
             notification.open({
                 type: "info",
-                message: 'submitting...',
+                message: 'Submitting the plugin...',
             });
             await plugin.save();
             options.setSubmitting(true);

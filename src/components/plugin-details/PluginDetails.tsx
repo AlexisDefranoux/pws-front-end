@@ -5,7 +5,6 @@ import axios from "axios";
 
 import PluginUse from "./UsePlugin";
 import CommentSection from "./CommentSection";
-import {Simulate} from "react-dom/test-utils";
 import {Redirect} from "react-router-dom";
 
 const {TabPane} = Tabs;
@@ -74,7 +73,10 @@ class PluginDetails extends Component<MyProps, MyState> {
     handleForkPlugin = () => {
         let idPlugin: string = this.props.match.params.id;
         let idUser: string | undefined = Parse.User.current()?.id;
-
+        notification.open({
+            type: "info",
+            message: 'Submitting the fork...',
+        });
         axios({
             method: 'GET',
             url: process.env.REACT_APP_FORK_URL,
@@ -197,14 +199,6 @@ class PluginDetails extends Component<MyProps, MyState> {
                         </Tabs>
                     </Row>
                 </Card>
-
-                {/*<br/>*/}
-                {/*<Row>*/}
-                {/*    <h2>Related products</h2>*/}
-                {/*    <Col span={5}>*/}
-                {/*        <ShopCard id={1}/>*/}
-                {/*    </Col>*/}
-                {/*</Row>*/}
             </Row>
         );
     }
