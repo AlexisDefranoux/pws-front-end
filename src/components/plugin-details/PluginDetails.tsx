@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-
 import {Button, Card, Col, Descriptions, Icon, notification, Rate, Row, Tabs, Tag} from "antd";
-import CommentSection from "./CommentSection";
-import PluginUse from './plugin/plugin_use';
 import Parse from "parse";
 import axios from "axios";
+
+import PluginUse from "./UsePlugin";
+import CommentSection from "./CommentSection";
 
 const {TabPane} = Tabs;
 type MyProps = { match: any };
@@ -12,7 +12,7 @@ type MyState = { plugin: any; category: any; likes: any[]; canRate: boolean; lik
 
 const descRating = ['Terrible', 'Bad', 'Normal', 'Good', 'Wonderful'];
 
-class Detail extends Component<MyProps, MyState> {
+class PluginDetails extends Component<MyProps, MyState> {
 
     async componentDidMount(): Promise<void> {
         let query = new Parse.Query(Parse.Object.extend("Plugin"));
@@ -155,7 +155,7 @@ class Detail extends Component<MyProps, MyState> {
                                     onClick={this.download.bind(this)}>Download</Button>
                             <Button type={"primary"} icon={"fork"} onClick={this.handleForkPlugin.bind(this)}
                                     style={{marginLeft: "10px"}}>Fork</Button>
-                        </Col>
+                            </Col>
                     </Row>
 
                     <Row>
@@ -194,4 +194,4 @@ class Detail extends Component<MyProps, MyState> {
     }
 }
 
-export default Detail;
+export default PluginDetails;

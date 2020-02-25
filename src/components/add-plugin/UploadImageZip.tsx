@@ -1,13 +1,14 @@
-import React, { Component } from 'react';
-import {Icon, Upload, message} from "antd";
+import React, {Component} from 'react';
+import {Icon, message, Upload} from "antd";
 import {UploadChangeParam} from "antd/es/upload";
 
 import Parse from 'parse';
 
-type MyProps = { isImageValidate : Function, isZip : boolean };
-type MyState = { loading : boolean, imageUrl : any  };
+type MyProps = { isImageValidate: Function, isZip: boolean };
+type MyState = { loading: boolean, imageUrl: any };
+
 class UploadImageZip extends Component<MyProps, MyState> {
-    constructor(props : any) {
+    constructor(props: any) {
         super(props);
         this.state = {
             loading: false,
@@ -18,7 +19,7 @@ class UploadImageZip extends Component<MyProps, MyState> {
     handleChange = (info: UploadChangeParam) => {
         this.props.isImageValidate(this.state.imageUrl);
         if (info.file.status === 'uploading') {
-            this.setState({ loading: true });
+            this.setState({loading: true});
             return;
         }
         if (info.file.status === 'done' && info.file.originFileObj) {
@@ -32,7 +33,7 @@ class UploadImageZip extends Component<MyProps, MyState> {
             );
             this.props.isImageValidate(
                 new Parse.File(
-                    this.props.isZip ? "plugin.zip":"profile.jpg",
+                    this.props.isZip ? "plugin.zip" : "profile.jpg",
                     info.file.originFileObj)
             );
         }
@@ -77,11 +78,11 @@ class UploadImageZip extends Component<MyProps, MyState> {
     render() {
         const uploadButton = (
             <div>
-                <Icon type={this.state.loading ? 'loading' : 'plus'} />
+                <Icon type={this.state.loading ? 'loading' : 'plus'}/>
                 <div className="ant-upload-text">Upload</div>
             </div>
         );
-        const { imageUrl } = this.state;
+        const {imageUrl} = this.state;
         return (
             <Upload
                 name="image"
@@ -97,9 +98,11 @@ class UploadImageZip extends Component<MyProps, MyState> {
                         ?
                         this.props.isZip
                             ?
-                            <img src="https://i0.wp.com/mychromebook.fr/wp-content/uploads/2015/04/Zip-File.png?resize=500%2C300" alt="your zip" style={{ width: '100%' }} />
+                            <img
+                                src="https://i0.wp.com/mychromebook.fr/wp-content/uploads/2015/04/Zip-File.png?resize=500%2C300"
+                                alt="your zip" style={{width: '100%'}}/>
                             :
-                            <img src={imageUrl} alt="your logo" style={{ width: '100%' }} />
+                            <img src={imageUrl} alt="your logo" style={{width: '100%'}}/>
                         :
                         uploadButton
                 }

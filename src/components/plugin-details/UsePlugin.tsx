@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState, MutableRefObject } from 'react';
-import {Icon, Row, Col, Input, Card} from 'antd';
-import useScript from '../../hooks/useScript';
+import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
+import {Card, Col, Icon, Input, Row} from 'antd';
 import axios from 'axios';
 
-const PluginUse: React.FC<{pluginID: string}> = (props) => {
+import useScript from '../../hooks/useScript';
+
+const PluginUse: React.FC<{ pluginID: string }> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
     const [loaded] = useScript(`${url_plugin}main.js`);
@@ -12,7 +13,7 @@ const PluginUse: React.FC<{pluginID: string}> = (props) => {
     const [playerState] = useState({playing: false, url: `${url_plugin}CleanGuitarRiff.mp3`});
 
     const loadPlugin = (info: any) => {
-        if(!player.current) return;
+        if (!player.current) return;
 
         const ctx = new AudioContext();
 
@@ -32,7 +33,7 @@ const PluginUse: React.FC<{pluginID: string}> = (props) => {
     };
 
     useEffect(() => {
-        if(!loaded) return;
+        if (!loaded) return;
 
         axios({
             method: 'GET',
@@ -44,21 +45,21 @@ const PluginUse: React.FC<{pluginID: string}> = (props) => {
 
     }, [loadPlugin, loaded, url_plugin]);
 
-    return !loaded ? <Icon type="loading" /> :
-    <Row type="flex" justify="space-around">
-        <Col span={11}>
-            <Card type="inner" title="Music">
-                <Input value={playerState.url}/>
-                <audio ref={player} src={playerState.url} id="sample" controls loop crossOrigin="anonymous"/>
-            </Card>
-        </Col>
-        <Col span={11}>
-            <Card type="inner" title="Plugin">
-                <div style={{display: 'flex', justifyContent: 'space-around'}} ref={pluginElement}/>
-                <br/><br/>
-            </Card>
-        </Col>
-    </Row>;
+    return !loaded ? <Icon type="loading"/> :
+        <Row type="flex" justify="space-around">
+            <Col span={11}>
+                <Card type="inner" title="Music">
+                    <Input value={playerState.url}/>
+                    <audio ref={player} src={playerState.url} id="sample" controls loop crossOrigin="anonymous"/>
+                </Card>
+            </Col>
+            <Col span={11}>
+                <Card type="inner" title="Plugin">
+                    <div style={{display: 'flex', justifyContent: 'space-around'}} ref={pluginElement}/>
+                    <br/><br/>
+                </Card>
+            </Col>
+        </Row>;
 };
 
 export default PluginUse;

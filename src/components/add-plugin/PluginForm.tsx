@@ -1,31 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Formik } from 'formik';
+import React, {useEffect, useState} from 'react';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import Parse from 'parse';
-import { Redirect } from 'react-router-dom';
-import TagForm from '../components/TagForm';
-import { RcFile } from 'antd/lib/upload';
-import {
-    Form,
-    Input,
-    InputNumber,
-    Checkbox,
-    SubmitButton
-} from 'formik-antd';
-import {
-    Card,
-    Row,
-    Col,
-    Upload,
-    Icon,
-    Select,
-    message, notification
- } from 'antd';
+import {Redirect} from 'react-router-dom';
 
-const { Option } = Select;
+import {RcFile} from 'antd/lib/upload';
+import {Checkbox, Form, Input, InputNumber, SubmitButton} from 'formik-antd';
+import {Card, Col, Icon, message, notification, Row, Select, Upload} from 'antd';
 
+import TagForm from './TagForm';
 
- const schema = Yup.object().shape({
+const {Option} = Select;
+
+const schema = Yup.object().shape({
     name: Yup.string()
         .min(2, 'Too short')
         .max(50, 'Too long')
@@ -56,17 +43,15 @@ const { Option } = Select;
         .of(Yup.string()),
     url: Yup.string(),
     user: Yup.object()
- });
+});
 
-const dummyRequest = (options: {file: any, onSuccess: any}) => {
+const dummyRequest = (options: { file: any, onSuccess: any }) => {
     setTimeout(() => options.onSuccess('ok'), 0);
 };
 
-type Props = {
+type Props = {};
 
-};
-
-const PluginForm: React.FC<Props> = (props) => {
+const PluginForm: React.FC<Props> = () => {
 
     const initialValues = {
         name: '',
@@ -112,7 +97,7 @@ const PluginForm: React.FC<Props> = (props) => {
                 message: 'Your plugin has been posted',
             });
             //TODO should redirect to '/detail/'+ plugin.id;
-        } catch(err) {
+        } catch (err) {
             console.error(err);
             options.setSubmitting(false);
             notification.open({
@@ -123,7 +108,7 @@ const PluginForm: React.FC<Props> = (props) => {
     }
 
 
-    function checkImageUpload(file: RcFile, fileList: RcFile[]): boolean {
+    function checkImageUpload(file: RcFile): boolean {
         const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
         if (!isJpgOrPng) {
             message.error('You can only upload JPG/PNG file!');
@@ -135,7 +120,7 @@ const PluginForm: React.FC<Props> = (props) => {
         return isJpgOrPng && isLt2M;
     }
 
-    function checkZipUpload(file: RcFile, fileList: RcFile[]): boolean {
+    function checkZipUpload(file: RcFile): boolean {
         const isZip = (file.type === 'application/zip' || file.type === 'application/x-zip-compressed');
         if (!isZip) {
             message.error('You can only upload Zip file!');
@@ -147,7 +132,7 @@ const PluginForm: React.FC<Props> = (props) => {
         return isZip && isLt50M;
     }
 
-    if(!Parse.User.current()) return <Redirect to='/'/>;
+    if (!Parse.User.current()) return <Redirect to='/'/>;
 
     return (
         <Card title='Add a new plugin'>
@@ -155,7 +140,7 @@ const PluginForm: React.FC<Props> = (props) => {
                 initialValues={initialValues}
                 validationSchema={schema}
                 onSubmit={handleSubmit}
-                >
+            >
                 {({setFieldValue, values}) => (
                     <Form>
                         <Row gutter={15} type="flex">
@@ -196,20 +181,20 @@ const PluginForm: React.FC<Props> = (props) => {
                             </Col>
 
                             <Col span={6}>
-                                    <Form.Item name="category" label="Category" hasFeedback>
-                                        <Select
-                                            placeholder="Select a category "
-                                            onSelect={(value: any) => setFieldValue('category', categories[parseInt(value)])}>
-                                            {categories.map((c, index) => (
-                                                <Option key={c.id} value={index}>{c.attributes.name}</Option>
-                                            ))}
-                                        </Select>
-                                    </Form.Item>
+                                <Form.Item name="category" label="Category" hasFeedback>
+                                    <Select
+                                        placeholder="Select a category "
+                                        onSelect={(value: any) => setFieldValue('category', categories[parseInt(value)])}>
+                                        {categories.map((c, index) => (
+                                            <Option key={c.id} value={index}>{c.attributes.name}</Option>
+                                        ))}
+                                    </Select>
+                                </Form.Item>
                             </Col>
 
                             <Col span={18}>
                                 <Form.Item name="tags" label="Tags">
-                                    <TagForm returnTags = {(tags: any) => setFieldValue('tags', tags)}/>
+                                    <TagForm returnTags={(tags: any) => setFieldValue('tags', tags)}/>
                                 </Form.Item>
                             </Col>
 
@@ -222,15 +207,16 @@ const PluginForm: React.FC<Props> = (props) => {
                                         beforeUpload={checkImageUpload}
                                         customRequest={dummyRequest}
                                         onChange={(info: any) =>
-                                        setFieldValue('image', new Parse.File('image', info.file.originFileObj))}
-                                        >
-                                            {values.image?
-                                                <img src="https://www.freeiconspng.com/uploads/multimedia-photo-icon-31.png" alt="avatar" style={{ width: '100%' }} /> :
-                                                <div>
-                                                    <Icon type='plus'/>
-                                                    <div className="ant-upload-text">Drop image</div>
-                                                </div>
-                                            }
+                                            setFieldValue('image', new Parse.File('image', info.file.originFileObj))}
+                                    >
+                                        {values.image ?
+                                            <img src="https://www.freeiconspng.com/uploads/multimedia-photo-icon-31.png"
+                                                 alt="avatar" style={{width: '100%'}}/> :
+                                            <div>
+                                                <Icon type='plus'/>
+                                                <div className="ant-upload-text">Drop image</div>
+                                            </div>
+                                        }
                                     </Upload>
                                 </Form.Item>
                             </Col>
@@ -245,14 +231,15 @@ const PluginForm: React.FC<Props> = (props) => {
                                         customRequest={dummyRequest}
                                         onChange={(info: any) =>
                                             setFieldValue('zip_plugin', new Parse.File('plugin', info.file.originFileObj))}
-                                        >
-                                            {values.zip_plugin?
-                                                <img src="https://image.flaticon.com/icons/png/512/1465/1465628.png" alt="avatar" style={{ width: '100%' }} />  :
-                                                <div>
-                                                    <Icon type='plus'/>
-                                                    <div className="ant-upload-text">Drop plugin</div>
-                                                </div>
-                                            }
+                                    >
+                                        {values.zip_plugin ?
+                                            <img src="https://image.flaticon.com/icons/png/512/1465/1465628.png"
+                                                 alt="avatar" style={{width: '100%'}}/> :
+                                            <div>
+                                                <Icon type='plus'/>
+                                                <div className="ant-upload-text">Drop plugin</div>
+                                            </div>
+                                        }
                                     </Upload>
                                 </Form.Item>
                             </Col>

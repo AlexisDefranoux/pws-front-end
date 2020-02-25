@@ -1,15 +1,15 @@
-import React, { useEffect, useRef, useState, MutableRefObject } from 'react';
-import {Icon, Row, Col, Input, Card} from 'antd';
-import useScript from '../hooks/useScript';
+import React, {MutableRefObject, useEffect, useRef, useState} from 'react';
+import {Card, Col, Icon, Input, Row} from 'antd';
 import axios from 'axios';
-//import '../../node_modules/mocha/mocha.js'
-//import '../../node_modules/chai/chai.js' //marche pas --> tu es sûr ? Est ce pas plutot de la flemardisme ?
 import 'mocha/mocha';
 import chai from 'chai';
+import useScript from '../../hooks/useScript';
+//import '../../node_modules/mocha/mocha.js'
+//import '../../node_modules/chai/chai.js' //marche pas --> tu es sûr ? Est ce pas plutot de la flemardisme ?
 
 declare var mocha: any;
 
-const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) => {
+const TestAndUsePlugin: React.FC<{ pluginID: string, testResults: Function }> = (props) => {
 
     const url_plugin = `${process.env.REACT_APP_PLUGINS_URL}${props.pluginID}/`;
 
@@ -26,7 +26,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         });
 
     const loadPlugin = (info: any) => {
-        if(!player.current) return;
+        if (!player.current) return;
 
         const ctx = new AudioContext();
 
@@ -47,7 +47,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         });
     };
 
-    const testPlugin = (param:any) => {
+    const testPlugin = (param: any) => {
 
         const plugin = param;
 
@@ -60,7 +60,9 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
                 return expect(plugin.loadGui).to.exist;
             });
             it('the loadGui() function should return an object', function () {
-                plugin.loadGui().then((res: any) => { return expect(res).to.not.be.empty });
+                plugin.loadGui().then((res: any) => {
+                    return expect(res).to.not.be.empty
+                });
             });
         });
 
@@ -69,7 +71,9 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
                 return expect(plugin.node.getMetadata).to.exist;
             });
             it('the getMetadata() function should return a json object', function () {
-                plugin.node.getMetadata().then((res: any) => { return expect(res).to.not.be.empty });
+                plugin.node.getMetadata().then((res: any) => {
+                    return expect(res).to.not.be.empty
+                });
             });
         });
 
@@ -139,7 +143,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
     };
 
     useEffect(() => {
-        if( !loadedMain) return;
+        if (!loadedMain) return;
 
         axios({
             method: 'GET',
@@ -152,7 +156,7 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
     }, [loadedMain]);
 
 
-    return !loadedMain ? <Icon type="loading" /> :
+    return !loadedMain ? <Icon type="loading"/> :
         <Row type="flex" justify="space-around">
             <Col span={7}>
                 <Card type="inner" title="Music">
@@ -174,4 +178,4 @@ const TryPlugin: React.FC<{pluginID: string, testResults: Function}> = (props) =
         </Row>;
 };
 
-export default TryPlugin;
+export default TestAndUsePlugin;

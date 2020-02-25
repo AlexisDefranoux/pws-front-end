@@ -1,8 +1,7 @@
-import {Button, Comment, Icon, List, notification} from 'antd';
+import {Button, Comment, Form, Icon, List, notification} from 'antd';
 import React, {Component} from "react";
-import Form from 'antd/es/form';
-import TextArea from 'antd/lib/input/TextArea';
 import Parse from "parse";
+import TextArea from 'antd/lib/input/TextArea';
 
 type MyProps = {
     plugin: any;
@@ -28,10 +27,10 @@ class CommentSection extends Component<MyProps, MyState> {
         let query = new Parse.Query(Parse.Object.extend("Comment"));
         query.equalTo("plugin", this.props.plugin);
         const comments = await query.find();
-        this.setState({ comments: comments });
+        this.setState({comments: comments});
     }
 
-    handleSubmit = async() => {
+    handleSubmit = async () => {
         const comment = new (Parse.Object.extend("Comment"))({
             plugin: this.props.plugin,
             user: Parse.User.current(),
@@ -79,17 +78,17 @@ class CommentSection extends Component<MyProps, MyState> {
                     )}
                 />
                 {Parse.User.current() &&
-                    <Form.Item>
-                        <TextArea rows={4} onChange={this.handleChange} value={this.state.newComment}/>
-                    </Form.Item>
+                <Form.Item>
+                    <TextArea rows={4} onChange={this.handleChange} value={this.state.newComment}/>
+                </Form.Item>
                 }
                 {Parse.User.current() &&
-                    < Form.Item >
-                        < Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit}
-                        type="primary">
+                <Form.Item>
+                    < Button htmlType="submit" loading={this.state.submitting} onClick={this.handleSubmit}
+                             type="primary">
                         Add Comment
-                        </Button>
-                    </Form.Item>
+                    </Button>
+                </Form.Item>
                 }
             </div>
         );
