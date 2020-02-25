@@ -4,10 +4,11 @@ import {Button, Card, Col, Descriptions, Icon, notification, Rate, Row, Tabs, Ta
 import CommentSection from "./CommentSection";
 import PluginUse from './plugin/plugin_use';
 import Parse from "parse";
+import axios from "axios";
 
 const {TabPane} = Tabs;
 type MyProps = { match: any };
-type MyState = { plugin: any; category: any; likes: any[]; canRate: boolean; likeAverage: number};
+type MyState = { plugin: any; category: any; likes: any[]; canRate: boolean; likeAverage: number };
 
 const descRating = ['Terrible', 'Bad', 'Normal', 'Good', 'Wonderful'];
 
@@ -16,30 +17,30 @@ class Detail extends Component<MyProps, MyState> {
     async componentDidMount(): Promise<void> {
         let query = new Parse.Query(Parse.Object.extend("Plugin"));
         const plugin = await query.get(this.props.match.params.id);
-        this.setState({ plugin: plugin });
+        this.setState({plugin: plugin});
 
         let query2 = new Parse.Query(Parse.Object.extend("Category"));
         const category = await query2.get(plugin.attributes.category.id);
-        this.setState({ category: category });
+        this.setState({category: category});
 
         let query3 = new Parse.Query(Parse.Object.extend("Like"));
         query3.equalTo("plugin", plugin);
         const likes = await query3.find();
-        this.setState({ likes: likes });
+        this.setState({likes: likes});
         this.computeRating(likes);
     }
 
-    computeRating = async(likes:any[]) => {
-        this.setState({ canRate: true });
+    computeRating = async (likes: any[]) => {
+        this.setState({canRate: true});
         let sum = 0;
         likes.forEach(like => {
-            sum += like.attributes.rate;
-            if(Parse.User?.current()?.id === like.attributes.user.id)
-                this.setState({ canRate: false });
+                sum += like.attributes.rate;
+                if (Parse.User?.current()?.id === like.attributes.user.id)
+                    this.setState({canRate: false});
             }
         );
-        if(likes.length !== 0) sum = sum/likes.length;
-        this.setState({ likeAverage: sum });
+        if (likes.length !== 0) sum = sum / likes.length;
+        this.setState({likeAverage: sum});
     };
 
     handleRatingChange = async (value: number) => {
@@ -57,7 +58,7 @@ class Detail extends Component<MyProps, MyState> {
                 type: "success",
                 message: 'Thank you for your opinion',
             });
-            this.setState({ canRate: false });
+            this.setState({canRate: false});
         } catch (e) {
             notification.open({
                 type: "error",
@@ -67,18 +68,38 @@ class Detail extends Component<MyProps, MyState> {
         }
     };
 
-    download () {
+    handleForkPlugin = () => {
+        console.log(process.env.REACT_APP_FORK_URL);
+        let idPlugin: string = this.props.match.params.id;
+        let idUser: string | undefined = Parse.User.current()?.id;
+
+        axios({
+            method: 'GET',
+            url: process.env.REACT_APP_FORK_URL,
+            responseType: 'json',
+            params: {
+                idPlugin: idPlugin,
+                idUser: idUser
+            }
+        }).then((response) => {
+            console.log(response);
+        });
+    };
+
+    download() {
         window.open(this.state.plugin.attributes.zip_plugin.url(), "_self")
     }
 
     render() {
         return (
-            <Row className="Detail" >
+            <Row className="Detail">
                 <Card title={Plugin.name}>
                     <Row gutter={2}>
 
                         <Col span={6}>
-                            <Card bordered={false} cover={<img id="zoomImg" src={this.state?.plugin?.attributes.image._url} alt={this.state?.plugin?.attributes.image._name}/>}/>
+                            <Card bordered={false}
+                                  cover={<img id="zoomImg" src={this.state?.plugin?.attributes.image._url}
+                                              alt={this.state?.plugin?.attributes.image._name}/>}/>
                         </Col>
 
                         <Col offset={1} span={17}>
@@ -89,7 +110,8 @@ class Detail extends Component<MyProps, MyState> {
                                 <Descriptions.Item label={"Rating"}>
                                     <span>
                                         {Parse.User.current() && this.state?.canRate ?
-                                            <Rate value={this.state?.likeAverage} tooltips={descRating} onChange={this.handleRatingChange}/> :
+                                            <Rate value={this.state?.likeAverage} tooltips={descRating}
+                                                  onChange={this.handleRatingChange}/> :
                                             <Rate value={this.state?.likeAverage} disabled tooltips={descRating}/>}
                                         <span> {this.state?.likes?.length + " evaluations"}</span>
                                   </span>
@@ -129,7 +151,10 @@ class Detail extends Component<MyProps, MyState> {
                                 </Descriptions.Item>
 
                             </Descriptions>
-                            <Button type={"primary"} icon={"download"} onClick={this.download.bind(this)}>Download</Button>
+                            <Button type={"primary"} icon={"download"}
+                                    onClick={this.download.bind(this)}>Download</Button>
+                            <Button type={"primary"} icon={"fork"} onClick={this.handleForkPlugin.bind(this)}
+                                    style={{marginLeft: "10px"}}>Fork</Button>
                         </Col>
                     </Row>
 
@@ -139,7 +164,10 @@ class Detail extends Component<MyProps, MyState> {
                             <TabPane tab={"Description"} key={"Description"}>
                                 <Row>{this.state?.plugin?.attributes.long_description}</Row><br/>
                                 {this.state?.plugin?.attributes.url &&
-                                <iframe title="youtube" width="560" height="315" src={'https://www.youtube.com/embed/' + this.state?.plugin?.attributes.url} frameBorder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"/>}
+                                <iframe title="youtube" width="560" height="315"
+                                        src={'https://www.youtube.com/embed/' + this.state?.plugin?.attributes.url}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"/>}
                             </TabPane>
 
                             <TabPane tab={"Try it"} key={"Try it"}>
