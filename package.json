@@ -14,7 +14,7 @@
     "@types/react-dom": "^16.9.5",
     "@types/yup": "^0.26.32",
     "antd": "^3.26.7",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "chai": "^4.2.0",
     "formik": "^2.1.4",
     "formik-antd": "^1.8.1",
